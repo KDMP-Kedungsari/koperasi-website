@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koperasi Desa Merah Putih - Sistem Dokumen</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+        }
+        
+        .login-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .login-box p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logout-btn {
+            padding: 8px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #e8f2ff;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .document-card {
+            background: white;
+            border: 1px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .document-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .document-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .document-meta {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin: 0 auto 15px;
+        }
+        
+        .category-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .category-count {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                margin-bottom: 5px;
+            }
+            
+            .document-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-building"></i>
+            </div>
+            <h1>Koperasi Desa Merah Putih</h1>
+            <p>Sistem Manajemen Dokumen</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+                
+                <div id="errorMessage" class="error-message">
+                    Username atau password salah!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-logo">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="header-title">Koperasi Desa Merah Putih</div>
+                </div>
+                <div class="header-right">
+                    <span id="currentUser">Admin</span>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </button>
+                <button class="nav-tab" onclick="showTab('documents')">
+                    <i class="fas fa-folder"></i> Dokumen
+                </button>
+                <button class="nav-tab" onclick="showTab('sales')">
+                    <i class="fas fa-shopping-cart"></i> Transaksi Penjualan
+                </button>
+                <button class="nav-tab" onclick="showTab('upload')">
+                    <i class="fas fa-upload"></i> Upload Dokumen
+                </button>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab" class="tab-content active">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalDocs">0</div>
+                        <div class="stat-label">Total Dokumen</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCategories">5</div>
+                        <div class="stat-label">Kategori</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="recentUploads">0</div>
+                        <div class="stat-label">Upload Hari Ini</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-folder-open"></i> Kategori Dokumen
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="categories">
+                            <div class="category-card" onclick="filterDocuments('keuangan')">
+                                <div class="category-icon">
+                                    <i class="fas fa-money-bill"></i>
+                                </div>
+                                <div class="category-title">Keuangan</div>
+                                <div class="category-count" id="count-keuangan">0 dokumen</div>
+                            </div>
+                            <div class="category-card" onclick="filterDocuments('administrasi')">
+                                <div class="category-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="category-title">Administrasi</div>
+                                <div class="category-count" id="count-administrasi">0 dokumen</div>
+                            </div>
+                            <div class="category-card" onclick="filterDocuments('rapat')">
+                                <div class="category-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="category-title">Rapat</div>
+                                <div class="category-count" id="count-rapat">0 dokumen</div>
+                            </div>
+                            <div class="category-card" onclick="filterDocuments('laporan')">
+                                <div class="category-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="category-title">Laporan</div>
+                                <div class="category-count" id="count-laporan">0 dokumen</div>
+                            </div>
+                            <div class="category-card" onclick="filterDocuments('kontrak')">
+                                <div class="category-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <div class="category-title">Kontrak</div>
+                                <div class="category-count" id="count-kontrak">0 dokumen</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div id="documentsTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-folder"></i> Dokumen Koperasi
+                        </div>
+                        <div>
+                            <select id="categoryFilter" onchange="filterDocuments(this.value)">
+                                <option value="">Semua Kategori</option>
+                                <option value="keuangan">Keuangan</option>
+                                <option value="administrasi">Administrasi</option>
+                                <option value="rapat">Rapat</option>
+                                <option value="laporan">Laporan</option>
+                                <option value="kontrak">Kontrak</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="documentsGrid" class="document-grid">
+                            <!-- Documents will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Tab -->
+            <div id="salesTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-shopping-cart"></i> Transaksi Penjualan
+                        </div>
+                        <a href="index.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Buka Sistem Penjualan
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <p>Sistem transaksi penjualan terintegrasi dengan file index yang sudah ada.</p>
+                        <p>Klik tombol di atas untuk mengakses sistem penjualan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="uploadTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-upload"></i> Upload Dokumen Baru
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <strong>Klik untuk upload</strong> atau drag & drop file di sini<br>
+                                <small>Mendukung: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG</small>
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" class="file-input" multiple 
+                               accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
+                        
+                        <div id="uploadForm" style="display: none; margin-top: 20px;">
+                            <div class="form-group">
+                                <label>Nama Dokumen</label>
+                                <input type="text" id="docName" placeholder="Masukkan nama dokumen">
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select id="docCategory">
+                                    <option value="keuangan">Keuangan</option>
+                                    <option value="administrasi">Administrasi</option>
+                                    <option value="rapat">Rapat</option>
+                                    <option value="laporan">Laporan</option>
+                                    <option value="kontrak">Kontrak</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea id="docDescription" rows="3" placeholder="Deskripsi dokumen (opsional)"></textarea>
+                            </div>
+                            <button class="btn btn-primary" onclick="uploadDocument()">
+                                <i class="fas fa-save"></i> Simpan Dokumen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login System
+        const credentials = {
+            'admin': 'koperasi123',
+            'pengurus': 'desa2024',
+            'sekretaris': 'merahputih'
+        };
+
+        let documents = [];
+        let currentFilter = '';
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (credentials[username] && credentials[username] === password) {
+                login(username);
+            } else {
+                showError();
+            }
+        });
+
+        function login(username) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('currentUser').textContent = username;
+            loadDocuments();
+            updateStats();
+        }
+
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function showError() {
+            document.getElementById('errorMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('errorMessage').style.display = 'none';
+            }, 3000);
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'documents') {
+                renderDocuments();
+            }
+        }
+
+        // File upload functionality
+        const uploadArea = document.querySelector('.upload-area');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                document.getElementById('uploadForm').style.display = 'block';
+                document.getElementById('docName').value = files[0].name.replace(/\.[^/.]+$/, "");
+            }
+        }
+
+        function uploadDocument() {
+            const name = document.getElementById('docName').value;
+            const category = document.getElementById('docCategory').value;
+            const description = document.getElementById('docDescription').value;
+            const files = fileInput.files;
+
+            if (!name || files.length === 0) {
+                alert('Mohon lengkapi nama dokumen dan pilih file!');
+                return;
+            }
+
+            // Create document object
+            const newDoc = {
+                id: Date.now(),
+                name: name,
+                category: category,
+                description: description,
+                fileName: files[0].name,
+                uploadDate: new Date().toLocaleDateString('id-ID'),
+                size: formatFileSize(files[0].size),
+                type: files[0].type
+            };
+
+            // Add to documents array
+            documents.push(newDoc);
+            
+            // Reset form
+            document.getElementById('uploadForm').style.display = 'none';
+            fileInput.value = '';
+            document.getElementById('docName').value = '';
+            document.getElementById('docDescription').value = '';
+            
+            // Update display
+            updateStats();
+            renderDocuments();
+            
+            alert('Dokumen berhasil diupload!');
+            showTab('documents');
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function getFileIcon(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            const icons = {
+                'pdf': 'fas fa-file-pdf',
+                'doc': 'fas fa-file-word',
+                'docx': 'fas fa-file-word',
+                'xls': 'fas fa-file-excel',
+                'xlsx': 'fas fa-file-excel',
+                'jpg': 'fas fa-file-image',
+                'jpeg': 'fas fa-file-image',
+                'png': 'fas fa-file-image'
+            };
+            return icons[ext] || 'fas fa-file';
+        }
+
+        function renderDocuments() {
+            const grid = document.getElementById('documentsGrid');
+            let filteredDocs = currentFilter ? 
+                documents.filter(doc => doc.category === currentFilter) : 
+                documents;
+
+            if (filteredDocs.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>Belum ada dokumen ${currentFilter ? 'dalam kategori ini' : 'yang diupload'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredDocs.map(doc => `
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="${getFileIcon(doc.fileName)}"></i>
+                    </div>
+                    <div class="document-title">${doc.name}</div>
+                    <div class="document-meta">
+                        ${doc.category.toUpperCase()} • ${doc.uploadDate} • ${doc.size}
+                    </div>
+                    ${doc.description ? `<p style="font-size: 12px; color: #888; margin-bottom: 15px;">${doc.description}</p>` : ''}
+                    <div class="document-actions">
+                        <a href="#" class="btn btn-primary" onclick="viewDocument(${doc.id})">
+                            <i class="fas fa-eye"></i> Lihat
+                        </a>
+                        <button class="btn btn-danger" onclick="deleteDocument(${doc.id})">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function viewDocument(id) {
+            const doc = documents.find(d => d.id === id);
+            if (doc) {
+                alert(`Membuka dokumen: ${doc.name}\n\nCatatan: Dalam implementasi nyata, ini akan membuka file ${doc.fileName}`);
+            }
+        }
+
+        function deleteDocument(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus dokumen ini?')) {
+                documents = documents.filter(doc => doc.id !== id);
+                renderDocuments();
+                updateStats();
+            }
+        }
+
+        function filterDocuments(category) {
+            currentFilter = category;
+            document.getElementById('categoryFilter').value = category;
+            renderDocuments();
+            
+            if (category) {
+                showTab('documents');
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalDocs').textContent = documents.length;
+            
+            // Update category counts
+            const categories = ['keuangan', 'administrasi', 'rapat', 'laporan', 'kontrak'];
+            categories.forEach(cat => {
+                const count = documents.filter(doc => doc.category === cat).length;
+                document.getElementById(`count-${cat}`).textContent = `${count} dokumen`;
+            });
+            
+            // Update recent uploads (today)
+            const today = new Date().toLocaleDateString('id-ID');
+            const todayUploads = documents.filter(doc => doc.uploadDate === today).length;
+            document.getElementById('recentUploads').textContent = todayUploads;
+        }
+
+        function loadDocuments() {
+            // Sample documents for demonstration
+            documents = [
+                {
+                    id: 1,
+                    name: "Laporan Keuangan Bulanan",
+                    category: "keuangan",
+                    description: "Laporan keuangan bulan Januari 2024",
+                    fileName: "laporan-keuangan-jan-2024.pdf",
+                    uploadDate: "21/08/2025",
+                    size: "2.5 MB",
+                    type: "application/pdf"
+                },
+                {
+                    id: 2,
+                    name: "Notulen Rapat Pengurus",
+                    category: "rapat",
+                    description: "Notulen rapat pengurus tanggal 15 Agustus 2025",
+                    fileName: "notulen-rapat-15-08-2025.docx",
+                    uploadDate: "20/08/2025",
+                    size: "1.2 MB",
+                    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                    id: 3,
+                    name: "Surat Ijin Usaha",
+                    category: "administrasi",
+                    description: "Surat ijin usaha koperasi dari pemerintah daerah",
+                    fileName: "surat-ijin-usaha.pdf",
+                    uploadDate: "19/08/2025",
+                    size: "3.1 MB",
+                    type: "application/pdf"
+                }
+            ];
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add some sample documents for demo
+            updateStats();
+        });
+
+        // Additional security features
+        function encryptPassword(password) {
+            // Simple encoding for demo - in production, use proper encryption
+            return btoa(password);
+        }
+
+        function validateFileType(file) {
+            const allowedTypes = [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'image/jpeg',
+                'image/jpg',
+                'image/png'
+            ];
+            
+            return allowedTypes.includes(file.type);
+        }
+
+        // Enhanced file handling
+        function handleFiles(files) {
+            const validFiles = Array.from(files).filter(file => {
+                if (!validateFileType(file)) {
+                    alert(`File ${file.name} tidak didukung. Hanya file PDF, DOC, DOCX, XLS, XLSX, JPG, dan PNG yang diperbolehkan.`);
+                    return false;
+                }
+                
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    alert(`File ${file.name} terlalu besar. Maksimal ukuran file adalah 10MB.`);
+                    return false;
+                }
+                
+                return true;
+            });
+
+            if (validFiles.length > 0) {
+                document.getElementById('uploadForm').style.display = 'block';
+                document.getElementById('docName').value = validFiles[0].name.replace(/\.[^/.]+$/, "");
+            }
+        }
+
+        // Search functionality
+        function searchDocuments(query) {
+            if (!query) {
+                renderDocuments();
+                return;
+            }
+            
+            const filtered = documents.filter(doc => 
+                doc.name.toLowerCase().includes(query.toLowerCase()) ||
+                doc.description.toLowerCase().includes(query.toLowerCase()) ||
+                doc.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const grid = document.getElementById('documentsGrid');
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>Tidak ditemukan dokumen dengan kata kunci "${query}"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(doc => `
+                <div class="document-card">
+                    <div class="document-icon">
+                        <i class="${getFileIcon(doc.fileName)}"></i>
+                    </div>
+                    <div class="document-title">${doc.name}</div>
+                    <div class="document-meta">
+                        ${doc.category.toUpperCase()} • ${doc.uploadDate} • ${doc.size}
+                    </div>
+                    ${doc.description ? `<p style="font-size: 12px; color: #888; margin-bottom: 15px;">${doc.description}</p>` : ''}
+                    <div class="document-actions">
+                        <a href="#" class="btn btn-primary" onclick="viewDocument(${doc.id})">
+                            <i class="fas fa-eye"></i> Lihat
+                        </a>
+                        <button class="btn btn-danger" onclick="deleteDocument(${doc.id})">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Auto-save feature simulation
+        function autoSave() {
+            // In a real application, this would save to a server
+            console.log('Auto-saving documents...');
+        }
+
+        // Set up auto-save every 30 seconds
+        setInterval(autoSave, 30000);
+
+        // Backup and restore functions
+        function exportDocuments() {
+            const data = JSON.stringify(documents, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `koperasi-documents-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        function importDocuments(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedDocs = JSON.parse(e.target.result);
+                        documents = [...documents, ...importedDocs];
+                        updateStats();
+                        renderDocuments();
+                        alert('Dokumen berhasil diimport!');
+                    } catch (error) {
+                        alert('File backup tidak valid!');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // Prevent unauthorized access
+        window.addEventListener('beforeunload', function(e) {
+            // Clear sensitive data when page is about to unload
+            if (document.getElementById('dashboard').style.display === 'block') {
+                return 'Anda yakin ingin meninggalkan halaman ini?';
+            }
+        });
+
+        // Session timeout (30 minutes)
+        let sessionTimeout;
+        function resetSessionTimeout() {
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(function() {
+                alert('Sesi Anda telah habis. Silakan login kembali.');
+                logout();
+            }, 30 * 60 * 1000); // 30 minutes
+        }
+
+        // Reset timeout on user activity
+        document.addEventListener('click', resetSessionTimeout);
+        document.addEventListener('keypress', resetSessionTimeout);
+
+        // Initialize session timeout when logged in
+        function login(username) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('currentUser').textContent = username;
+            loadDocuments();
+            updateStats();
+            resetSessionTimeout();
+        }
+    </script>
+</body>
+</html>
+             
