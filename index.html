@@ -1056,6 +1056,8 @@
     </div>
 
     <script>
+        console.log("Script loaded!"); // Debug log
+        
         // Product variants data
         const berasVariants = [
             { name: "Beras Putih Premium", price: 12000, unit: "kg" },
@@ -1117,13 +1119,27 @@
         let cart = [];
         let currentProduct = {};
 
-        // Filter products
-        function filterProducts(category) {
+        // Filter products - Global function
+        window.filterProducts = function(category) {
+            console.log("Filter clicked:", category); // Debug log
             const cards = document.querySelectorAll('.product-card');
             const buttons = document.querySelectorAll('.category-btn');
             
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            // Find and activate the clicked button
+            buttons.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(category === 'all' ? 'semua' : 
+                    category === 'beras' ? 'beras' :
+                    category === 'sayuran' ? 'sayuran' :
+                    category === 'ikan' ? 'ikan' :
+                    category === 'daging' ? 'daging' :
+                    category === 'telur' ? 'telur' :
+                    category === 'olahan' ? 'olahan' :
+                    category === 'minuman' ? 'minuman' :
+                    category === 'lainlain' ? 'lain' : category)) {
+                    btn.classList.add('active');
+                }
+            });
             
             cards.forEach(card => {
                 if (category === 'all' || card.dataset.category === category) {
@@ -1135,8 +1151,9 @@
             });
         }
 
-        // Open order modal
-        function openOrderModal(productName, sku, variants) {
+        // Open order modal - Global function
+        window.openOrderModal = function(productName, sku, variants) {
+            console.log("Modal opened:", productName); // Debug log
             currentProduct = { name: productName, sku: sku, variants: variants };
             
             document.getElementById('modalTitle').textContent = productName;
@@ -1158,73 +1175,9 @@
             document.getElementById('orderModal').style.display = 'block';
         }
 
-        // Select variant
-        function selectVariant(index) {
-            // Remove previous selection
-            document.querySelectorAll('#modalVariants .variant-item').forEach(item => {
-                item.style.borderColor = 'transparent';
-                item.style.backgroundColor = '#f8f9fa';
-            });
-            
-            // Select current variant
-            const selectedVariant = document.getElementById(`variant-${index}`);
-            selectedVariant.style.borderColor = '#ff6b6b';
-            selectedVariant.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
-            
-            currentProduct.selectedVariant = currentProduct.variants[index];
-            updateModalPrice();
-            
-            document.getElementById('addToCartBtn').onclick = () => addToCart();
-        }
-
-        // Update modal price
-        function updateModalPrice() {
-            const quantity = parseInt(document.getElementById('quantityInput').value);
-            const totalPrice = currentProduct.selectedVariant.price * quantity;
-            document.getElementById('modalPrice').innerHTML = `
-                <h3 style="color: #ff6b6b; text-align: center; margin: 15px 0;">
-                    Total: Rp ${totalPrice.toLocaleString('id-ID')}
-                </h3>
-            `;
-        }
-
-        // Change quantity
-        function changeQuantity(delta) {
-            const input = document.getElementById('quantityInput');
-            const newValue = parseInt(input.value) + delta;
-            if (newValue >= 1) {
-                input.value = newValue;
-                updateModalPrice();
-            }
-        }
-
-        // Add to cart
-        function addToCart() {
-            const quantity = parseInt(document.getElementById('quantityInput').value);
-            const item = {
-                id: Date.now(),
-                productName: currentProduct.name,
-                sku: currentProduct.sku,
-                variantName: currentProduct.selectedVariant.name,
-                price: currentProduct.selectedVariant.price,
-                unit: currentProduct.selectedVariant.unit,
-                quantity: quantity,
-                total: currentProduct.selectedVariant.price * quantity
-            };
-            
-            cart.push(item);
-            updateCartCount();
-            closeModal();
-            showNotification(`${item.variantName} berhasil ditambahkan ke keranjang!`);
-        }
-
-        // Update cart count
-        function updateCartCount() {
-            document.getElementById('cartCount').textContent = cart.length;
-        }
-
-        // Open cart
-        function openCart() {
+        // Open cart - Global function
+        window.openCart = function() {
+            console.log("Cart opened, items:", cart.length); // Debug log
             if (cart.length === 0) {
                 document.getElementById('cartItems').innerHTML = `
                     <div class="empty-cart">
@@ -1264,8 +1217,115 @@
             document.getElementById('cartModal').style.display = 'block';
         }
 
-        // Update cart item quantity
-        function updateCartItemQuantity(itemId, delta) {
+        // Select variant - Global function
+        window.selectVariant = function(index) {
+            console.log("Variant selected:", index); // Debug log
+            // Remove previous selection
+            document.querySelectorAll('#modalVariants .variant-item').forEach(item => {
+                item.style.borderColor = 'transparent';
+                item.style.backgroundColor = '#f8f9fa';
+            });
+            
+            // Select current variant
+            const selectedVariant = document.getElementById(`variant-${index}`);
+            if (selectedVariant) {
+                selectedVariant.style.borderColor = '#ff6b6b';
+                selectedVariant.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+            }
+            
+            currentProduct.selectedVariant = currentProduct.variants[index];
+            updateModalPrice();
+            
+            document.getElementById('addToCartBtn').onclick = () => addToCart();
+        }
+
+        // Change quantity - Global function
+        window.changeQuantity = function(delta) {
+            console.log("Quantity change:", delta); // Debug log
+            const input = document.getElementById('quantityInput');
+            const newValue = parseInt(input.value) + delta;
+            if (newValue >= 1) {
+                input.value = newValue;
+                updateModalPrice();
+            }
+        }
+
+        // Close modal - Global function
+        window.closeModal = function() {
+            console.log("Modal closed"); // Debug log
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        // Close cart - Global function
+        window.closeCart = function() {
+            console.log("Cart closed"); // Debug log
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        // Add to cart
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantityInput').value);
+            const item = {
+                id: Date.now(),
+                productName: currentProduct.name,
+                sku: currentProduct.sku,
+                variantName: currentProduct.selectedVariant.name,
+                price: currentProduct.selectedVariant.price,
+                unit: currentProduct.selectedVariant.unit,
+                quantity: quantity,
+                total: currentProduct.selectedVariant.price * quantity
+            };
+            
+            cart.push(item);
+            updateCartCount();
+            closeModal();
+            showNotification(`${item.variantName} berhasil ditambahkan ke keranjang!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        // Update modal price
+        function updateModalPrice() {
+            const quantity = parseInt(document.getElementById('quantityInput').value);
+            const totalPrice = currentProduct.selectedVariant.price * quantity;
+            document.getElementById('modalPrice').innerHTML = `
+                <h3 style="color: #ff6b6b; text-align: center; margin: 15px 0;">
+                    Total: Rp ${totalPrice.toLocaleString('id-ID')}
+                </h3>
+            `;
+        }
+
+        // Add to cart
+        function addToCart() {
+            console.log("Adding to cart"); // Debug log
+            const quantity = parseInt(document.getElementById('quantityInput').value);
+            const item = {
+                id: Date.now(),
+                productName: currentProduct.name,
+                sku: currentProduct.sku,
+                variantName: currentProduct.selectedVariant.name,
+                price: currentProduct.selectedVariant.price,
+                unit: currentProduct.selectedVariant.unit,
+                quantity: quantity,
+                total: currentProduct.selectedVariant.price * quantity
+            };
+            
+            cart.push(item);
+            updateCartCount();
+            closeModal();
+            showNotification(`${item.variantName} berhasil ditambahkan ke keranjang!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        // Update cart item quantity - Global function
+        window.updateCartItemQuantity = function(itemId, delta) {
             const item = cart.find(item => item.id === itemId);
             if (item) {
                 const newQuantity = item.quantity + delta;
@@ -1277,8 +1337,8 @@
             }
         }
 
-        // Set cart item quantity
-        function setCartItemQuantity(itemId, quantity) {
+        // Set cart item quantity - Global function
+        window.setCartItemQuantity = function(itemId, quantity) {
             const item = cart.find(item => item.id === itemId);
             if (item && quantity >= 1) {
                 item.quantity = parseInt(quantity);
@@ -1287,8 +1347,8 @@
             }
         }
 
-        // Remove from cart
-        function removeFromCart(itemId) {
+        // Remove from cart - Global function
+        window.removeFromCart = function(itemId) {
             cart = cart.filter(item => item.id !== itemId);
             updateCartCount();
             openCart(); // Refresh cart display
@@ -1300,8 +1360,9 @@
             document.getElementById('totalAmount').textContent = `Rp ${total.toLocaleString('id-ID')}`;
         }
 
-        // Checkout via WhatsApp
-        function checkoutWhatsApp() {
+        // Checkout via WhatsApp - Global function
+        window.checkoutWhatsApp = function() {
+            console.log("WhatsApp checkout"); // Debug log
             if (cart.length === 0) {
                 alert('Keranjang belanja kosong!');
                 return;
@@ -1326,29 +1387,19 @@
             window.open(whatsappUrl, '_blank');
         }
 
-        // Continue shopping
-        function continueShopping() {
+        // Continue shopping - Global function
+        window.continueShopping = function() {
             closeCart();
             document.getElementById('produk').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Clear cart
-        function clearCart() {
+        // Clear cart - Global function
+        window.clearCart = function() {
             if (confirm('Yakin ingin mengosongkan keranjang?')) {
                 cart = [];
                 updateCartCount();
                 closeCart();
             }
-        }
-
-        // Close modal
-        function closeModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        // Close cart
-        function closeCart() {
-            document.getElementById('cartModal').style.display = 'none';
         }
 
         // Show notification
@@ -1370,22 +1421,29 @@
         }
 
         // Handle quantity input changes
-        document.getElementById('quantityInput').addEventListener('input', function() {
-            if (this.value < 1) this.value = 1;
-            updateModalPrice();
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.getElementById('quantityInput');
+            if (quantityInput) {
+                quantityInput.addEventListener('input', function() {
+                    if (this.value < 1) this.value = 1;
+                    updateModalPrice();
+                });
+            }
         });
 
         // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
         });
