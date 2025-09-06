@@ -43,9 +43,8 @@
             align-items: center;
         }
         
-        /* New for mobile cart */
         .nav-secondary {
-            display: none; /* Hidden by default */
+            display: none;
             padding-top: 1rem;
             border-top: 1px solid #eee;
             margin-top: 1rem;
@@ -134,7 +133,6 @@
             right: -5px;
         }
         
-        /* Mobile-specific cart button style */
         .mobile-cart-button {
             width: 100%;
             justify-content: center;
@@ -301,25 +299,77 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
+        /* Enhanced Product Image with Fixed Frame */
         .product-image {
             width: 100%;
-            height: 120px;
+            height: 200px;
             background: #f8f9fa;
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
-            font-size: 4rem;
             overflow: hidden;
             position: relative;
+            border: 3px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .product-image:hover {
+            border-color: #ff6b6b;
+            transform: scale(1.02);
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .product-image-placeholder {
+            font-size: 4rem;
+            color: #adb5bd;
+            transition: all 0.3s ease;
+        }
+
+        .product-image:hover .product-image-placeholder {
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        /* Photo gallery modal */
+        .photo-gallery {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .product-image:hover .photo-gallery {
+            opacity: 1;
+        }
+
+        .photo-gallery:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.1);
         }
 
         .product-sku {
@@ -350,10 +400,20 @@
             align-items: center;
             padding: 8px 0;
             border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin: 4px 0;
+        }
+
+        .variant-item:hover {
+            background-color: #f8f9fa;
+            border-color: #ff6b6b;
         }
 
         .variant-item:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid #eee;
         }
 
         .variant-name {
@@ -366,93 +426,125 @@
             color: #ff6b6b;
         }
 
-        .order-btn {
+        /* Enhanced Add to Cart Button */
+        .add-to-cart-btn {
             background: #25d366;
             color: white;
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 25px;
             font-weight: bold;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             margin-top: 1rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             width: 100%;
+            font-size: 1rem;
         }
 
-        .order-btn:hover {
+        .add-to-cart-btn:hover {
             background: #128c7e;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
         }
 
-        /* Modal for product details */
-        .modal {
+        .add-to-cart-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Quantity selector for direct add */
+        .quick-quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 8px;
+        }
+
+        .quick-quantity-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quick-quantity-btn:hover {
+            background: #e55656;
+            transform: scale(1.1);
+        }
+
+        .quick-quantity-input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            font-weight: bold;
+            background: white;
+        }
+
+        /* Photo Gallery Modal */
+        .gallery-modal {
             display: none;
             position: fixed;
-            z-index: 2000;
+            z-index: 3000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(5px);
         }
 
-        .modal-content {
+        .gallery-modal-content {
             background: white;
-            margin: 5% auto;
+            margin: 3% auto;
             padding: 2rem;
             border-radius: 20px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
+            max-width: 800px;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
         }
 
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .close:hover {
-            color: #333;
-        }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 1rem 0;
-            justify-content: center;
-        }
-
-        .quantity-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .quantity-input {
-            width: 60px;
-            text-align: center;
-            padding: 8px;
-            border: 2px solid #ff6b6b;
+        .gallery-item {
             border-radius: 10px;
-            font-weight: bold;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid #e9ecef;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            border-color: #ff6b6b;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
         }
 
         /* Cart Modal */
@@ -478,6 +570,22 @@
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            color: #333;
         }
 
         .cart-item {
@@ -622,6 +730,29 @@
             opacity: 0.5;
         }
 
+        /* Success notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
         /* Contact Section */
         .contact {
             padding: 5rem 0;
@@ -673,7 +804,6 @@
                 display: none;
             }
             
-            /* Show secondary nav on mobile */
             .nav-secondary {
                 display: block;
             }
@@ -698,8 +828,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .modal-content,
-            .cart-modal-content {
+            .cart-modal-content,
+            .gallery-modal-content {
                 width: 95%;
                 margin: 10% auto;
             }
@@ -712,6 +842,11 @@
 
             .cart-actions {
                 flex-direction: column;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
             }
         }
 
@@ -798,233 +933,332 @@
                 <button class="category-btn" onclick="filterProducts('olahan')">Produk Olahan</button>
                 <button class="category-btn" onclick="filterProducts('minuman')">Minuman</button>
                 <button class="category-btn" onclick="filterProducts('lainlain')">Produk Lain-Lain</button>
-				<button class="category-btn" onclick="filterProducts('pertanian')">Pertanian</button>
+                <button class="category-btn" onclick="filterProducts('pertanian')">Pertanian</button>
             </div>
 
             <div class="products-grid" id="productsGrid">
                 <div class="product-card" data-category="beras">
-                    <div class="product-image">🌾</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/beras/beras-premium.jpg" alt="Beras Premium" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🌾</div>
+                        <button class="photo-gallery" onclick="openGallery('beras')">📷</button>
+                    </div>
                     <div class="product-sku">KBR-001</div>
                     <h3>Beras Premium</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="beras-1" data-price="12000">
                             <span class="variant-name">Beras Putih Premium</span>
                             <span class="variant-price">Rp 12.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="beras-2" data-price="15000">
                             <span class="variant-name">Beras Merah Organik</span>
                             <span class="variant-price">Rp 15.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="beras-3" data-price="18000">
                             <span class="variant-name">Beras Hitam Premium</span>
                             <span class="variant-price">Rp 18.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="beras-4" data-price="13000">
                             <span class="variant-name">Beras Ketan Putih</span>
                             <span class="variant-price">Rp 13.000/kg</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Beras Premium', 'KBR-001', berasVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('beras-product', -1)">-</button>
+                        <input type="number" id="beras-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('beras-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('beras-product', 'Beras Premium', 'KBR-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="sayuran">
-                    <div class="product-image">🥬</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/sayuran/sayuran-organik.jpg" alt="Sayuran Organik" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🥬</div>
+                        <button class="photo-gallery" onclick="openGallery('sayuran')">📷</button>
+                    </div>
                     <div class="product-sku">KSY-001</div>
                     <h3>Sayuran Segar Organik</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="sayuran-1" data-price="3000">
                             <span class="variant-name">Kangkung Organik</span>
                             <span class="variant-price">Rp 3.000/ikat</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="sayuran-2" data-price="3500">
                             <span class="variant-name">Bayam Merah</span>
                             <span class="variant-price">Rp 3.500/ikat</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="sayuran-3" data-price="4000">
                             <span class="variant-name">Sawi Hijau</span>
                             <span class="variant-price">Rp 4.000/ikat</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="sayuran-4" data-price="8000">
                             <span class="variant-name">Tomat Cherry</span>
                             <span class="variant-price">Rp 8.000/250gr</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Sayuran Segar Organik', 'KSY-001', sayuranVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('sayuran-product', -1)">-</button>
+                        <input type="number" id="sayuran-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('sayuran-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('sayuran-product', 'Sayuran Segar Organik', 'KSY-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="ikan">
-                    <div class="product-image">🐟</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/ikan/ikan-segar.jpg" alt="Ikan Segar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🐟</div>
+                        <button class="photo-gallery" onclick="openGallery('ikan')">📷</button>
+                    </div>
                     <div class="product-sku">KIK-001</div>
                     <h3>Ikan Segar Lokal</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
-                            <span class="variant-name">10101-Ikan Lele Segar</span>
+                        <div class="variant-item" data-variant="ikan-1" data-price="18000">
+                            <span class="variant-name">Ikan Lele Segar</span>
                             <span class="variant-price">Rp 18.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="ikan-2" data-price="25000">
                             <span class="variant-name">Ikan Nila Segar</span>
                             <span class="variant-price">Rp 25.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="ikan-3" data-price="35000">
                             <span class="variant-name">Ikan Gurame</span>
                             <span class="variant-price">Rp 35.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="ikan-4" data-price="22000">
                             <span class="variant-name">Ikan Bandeng</span>
                             <span class="variant-price">Rp 22.000/kg</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Ikan Segar Lokal', 'KIK-001', ikanVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('ikan-product', -1)">-</button>
+                        <input type="number" id="ikan-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('ikan-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('ikan-product', 'Ikan Segar Lokal', 'KIK-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="daging">
-                    <div class="product-image">🥩</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/daging/daging-segar.jpg" alt="Daging Segar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🥩</div>
+                        <button class="photo-gallery" onclick="openGallery('daging')">📷</button>
+                    </div>
                     <div class="product-sku">KDG-001</div>
                     <h3>Daging Segar Lokal</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="daging-1" data-price="120000">
                             <span class="variant-name">Daging Sapi Segar</span>
                             <span class="variant-price">Rp 120.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="daging-2" data-price="110000">
                             <span class="variant-name">Daging Kambing</span>
                             <span class="variant-price">Rp 110.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="daging-3" data-price="85000">
                             <span class="variant-name">Daging Ayam Kampung</span>
                             <span class="variant-price">Rp 85.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="daging-4" data-price="75000">
                             <span class="variant-name">Daging Bebek</span>
                             <span class="variant-price">Rp 75.000/kg</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Daging Segar Lokal', 'KDG-001', dagingVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('daging-product', -1)">-</button>
+                        <input type="number" id="daging-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('daging-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('daging-product', 'Daging Segar Lokal', 'KDG-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="telur">
-                    <div class="product-image">🥚</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/telur/telur-segar.jpg" alt="Telur Segar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🥚</div>
+                        <button class="photo-gallery" onclick="openGallery('telur')">📷</button>
+                    </div>
                     <div class="product-sku">KTL-001</div>
                     <h3>Telur Segar Lokal</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="telur-1" data-price="2500">
                             <span class="variant-name">Telur Ayam Kampung</span>
                             <span class="variant-price">Rp 2.500/butir</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="telur-2" data-price="1800">
                             <span class="variant-name">Telur Ayam Ras</span>
                             <span class="variant-price">Rp 1.800/butir</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="telur-3" data-price="3000">
                             <span class="variant-name">Telur Bebek</span>
                             <span class="variant-price">Rp 3.000/butir</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="telur-4" data-price="500">
                             <span class="variant-name">Telur Puyuh</span>
                             <span class="variant-price">Rp 500/butir</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Telur Segar Lokal', 'KTL-001', telurVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('telur-product', -1)">-</button>
+                        <input type="number" id="telur-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('telur-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('telur-product', 'Telur Segar Lokal', 'KTL-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="olahan">
-                    <div class="product-image">🍜</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/olahan/produk-olahan.jpg" alt="Produk Olahan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🍜</div>
+                        <button class="photo-gallery" onclick="openGallery('olahan')">📷</button>
+                    </div>
                     <div class="product-sku">KOL-001</div>
                     <h3>Produk Olahan Tradisional</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="olahan-1" data-price="8000">
                             <span class="variant-name">Tempe Kedelai Organik</span>
                             <span class="variant-price">Rp 8.000/papan</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="olahan-2" data-price="5000">
                             <span class="variant-name">Tahu Putih</span>
                             <span class="variant-price">Rp 5.000/papan</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="olahan-3" data-price="15000">
                             <span class="variant-name">Kerupuk Ikan</span>
                             <span class="variant-price">Rp 15.000/pack</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="olahan-4" data-price="12000">
                             <span class="variant-name">Sambal Pecel</span>
                             <span class="variant-price">Rp 12.000/jar</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Produk Olahan Tradisional', 'KOL-001', olahanVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('olahan-product', -1)">-</button>
+                        <input type="number" id="olahan-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('olahan-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('olahan-product', 'Produk Olahan Tradisional', 'KOL-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
 
                 <div class="product-card" data-category="minuman">
-                    <div class="product-image">🥤</div>
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/minuman/minuman-tradisional.jpg" alt="Minuman Tradisional" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🥤</div>
+                        <button class="photo-gallery" onclick="openGallery('minuman')">📷</button>
+                    </div>
                     <div class="product-sku">KMN-001</div>
                     <h3>Minuman Tradisional</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="minuman-1" data-price="8000">
                             <span class="variant-name">Jamu Kunyit Asam</span>
                             <span class="variant-price">Rp 8.000/botol</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="minuman-2" data-price="12000">
                             <span class="variant-name">Es Kelapa Muda</span>
                             <span class="variant-price">Rp 12.000/buah</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="minuman-3" data-price="5000">
                             <span class="variant-name">Wedang Jahe</span>
                             <span class="variant-price">Rp 5.000/gelas</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="minuman-4" data-price="6000">
                             <span class="variant-name">Teh Daun Mint</span>
                             <span class="variant-price">Rp 6.000/gelas</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Minuman Tradisional', 'KMN-001', minumanVariants)">Tambah ke Keranjang</button>
-				</div>
-				
-				<div class="product-card" data-category="lainlain">
-                    <div class="product-image">📝</div>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('minuman-product', -1)">-</button>
+                        <input type="number" id="minuman-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('minuman-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('minuman-product', 'Minuman Tradisional', 'KMN-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
+                </div>
+                
+                <div class="product-card" data-category="lainlain">
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/lainlain/produk-lainlain.jpg" alt="Produk Lain-lain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">📦</div>
+                        <button class="photo-gallery" onclick="openGallery('lainlain')">📷</button>
+                    </div>
                     <div class="product-sku">PLL-001</div>
                     <h3>Produk Lain-Lain</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="lainlain-1" data-price="21000">
                             <span class="variant-name">Gas Melon</span>
                             <span class="variant-price">Rp 21.000/tabung</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="lainlain-2" data-price="12000">
                             <span class="variant-name">Materai</span>
                             <span class="variant-price">Rp 12.000/pcs</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="lainlain-3" data-price="5000">
                             <span class="variant-name">Tepung Terigu</span>
                             <span class="variant-price">Rp 5.000/kg</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="lainlain-4" data-price="6000">
                             <span class="variant-name">Buku Tulis</span>
                             <span class="variant-price">Rp 6.000/pcs</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Produk Lain-Lain', 'PLL-001', lainlainVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('lainlain-product', -1)">-</button>
+                        <input type="number" id="lainlain-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('lainlain-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('lainlain-product', 'Produk Lain-Lain', 'PLL-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
-				
-				<div class="product-card" data-category="pertanian">
-                    <div class="product-image">🌍</div>
+                
+                <div class="product-card" data-category="pertanian">
+                    <div class="product-image">
+                        <img src="KDMP-Kedungsari/koperasi-website/images/pertanian/produk-pertanian.jpg" alt="Produk Pertanian" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">🌽</div>
+                        <button class="photo-gallery" onclick="openGallery('pertanian')">📷</button>
+                    </div>
                     <div class="product-sku">PER-001</div>
                     <h3>Pertanian</h3>
                     <div class="product-variants">
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="pertanian-1" data-price="21000">
                             <span class="variant-name">Pupuk A</span>
-                            <span class="variant-price">Rp 21.000/tabung</span>
+                            <span class="variant-price">Rp 21.000/karung</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="pertanian-2" data-price="12000">
                             <span class="variant-name">Pupuk B</span>
-                            <span class="variant-price">Rp 12.000/pcs</span>
+                            <span class="variant-price">Rp 12.000/karung</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="pertanian-3" data-price="25000">
                             <span class="variant-name">Pestisida A</span>
-                            <span class="variant-price">Rp 5.000/kg</span>
+                            <span class="variant-price">Rp 25.000/botol</span>
                         </div>
-                        <div class="variant-item">
+                        <div class="variant-item" data-variant="pertanian-4" data-price="18000">
                             <span class="variant-name">Pestisida B</span>
-                            <span class="variant-price">Rp 6.000/pcs</span>
+                            <span class="variant-price">Rp 18.000/botol</span>
                         </div>
                     </div>
-                    <button class="order-btn" onclick="openOrderModal('Pertanian', 'PER-001', pertanianVariants)">Tambah ke Keranjang</button>
+                    <div class="quick-quantity">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('pertanian-product', -1)">-</button>
+                        <input type="number" id="pertanian-product-qty" value="1" min="1" class="quick-quantity-input">
+                        <button class="quick-quantity-btn" onclick="changeProductQuantity('pertanian-product', 1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="quickAddToCart('pertanian-product', 'Pertanian', 'PER-001')">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
             </div>
         </div>
@@ -1042,7 +1276,7 @@
                 <div class="contact-item">
                     <h3>Telepon</h3>
                     <p>+62 812-9683 690</p>
-                    <p>+62 888-8888-8888</p>
+                    <p>+62 888-0617-4649</p>
                 </div>
                 <div class="contact-item">
                     <h3>Email</h3>
@@ -1059,21 +1293,7 @@
         </div>
     </footer>
 
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeOrderModal()">&times;</span>
-            <h3 id="modalProductName"></h3>
-            <p id="modalProductSKU"></p>
-            <div id="modalProductVariants"></div>
-            <div class="quantity-selector">
-                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
-                <input type="number" id="quantityInput" value="1" min="1" class="quantity-input">
-                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
-            </div>
-            <button class="order-btn" id="addToCartBtn">Tambahkan ke Keranjang</button>
-        </div>
-    </div>
-
+    <!-- Cart Modal -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-modal-content">
             <span class="close" onclick="closeCart()">&times;</span>
@@ -1094,75 +1314,172 @@
         </div>
     </div>
 
-    <script>
-        // Data Produk
-        const berasVariants = [
-            { id: 'beras-1', name: 'Beras Putih Premium', price: 12000 },
-            { id: 'beras-2', name: 'Beras Merah Organik', price: 15000 },
-            { id: 'beras-3', name: 'Beras Hitam Premium', price: 18000 },
-            { id: 'beras-4', name: 'Beras Ketan Putih', price: 13000 }
-        ];
-        const sayuranVariants = [
-            { id: 'sayuran-1', name: 'Kangkung Organik', price: 3000 },
-            { id: 'sayuran-2', name: 'Bayam Merah', price: 3500 },
-            { id: 'sayuran-3', name: 'Sawi Hijau', price: 4000 },
-            { id: 'sayuran-4', name: 'Tomat Cherry', price: 8000 }
-        ];
-        const ikanVariants = [
-            { id: 'ikan-1', name: '10101-Ikan Lele Segar', price: 18000 },
-            { id: 'ikan-2', name: 'Ikan Nila Segar', price: 25000 },
-            { id: 'ikan-3', name: 'Ikan Gurame', price: 35000 },
-            { id: 'ikan-4', name: 'Ikan Bandeng', price: 22000 }
-        ];
-        const dagingVariants = [
-            { id: 'daging-1', name: 'Daging Sapi Segar', price: 120000 },
-            { id: 'daging-2', name: 'Daging Kambing', price: 110000 },
-            { id: 'daging-3', name: 'Daging Ayam Kampung', price: 85000 },
-            { id: 'daging-4', name: 'Daging Bebek', price: 75000 }
-        ];
-        const telurVariants = [
-            { id: 'telur-1', name: 'Telur Ayam Kampung', price: 2500 },
-            { id: 'telur-2', name: 'Telur Ayam Ras', price: 1800 },
-            { id: 'telur-3', name: 'Telur Bebek', price: 3000 },
-            { id: 'telur-4', name: 'Telur Puyuh', price: 500 }
-        ];
-        const olahanVariants = [
-            { id: 'olahan-1', name: 'Tempe Kedelai Organik', price: 8000 },
-            { id: 'olahan-2', name: 'Tahu Putih', price: 5000 },
-            { id: 'olahan-3', name: 'Kerupuk Ikan', price: 15000 },
-            { id: 'olahan-4', name: 'Sambal Pecel', price: 12000 }
-        ];
-        const minumanVariants = [
-            { id: 'minuman-1', name: 'Jamu Kunyit Asam', price: 8000 },
-            { id: 'minuman-2', name: 'Es Kelapa Muda', price: 12000 },
-            { id: 'minuman-3', name: 'Wedang Jahe', price: 5000 },
-            { id: 'minuman-4', name: 'Teh Daun Mint', price: 6000 }
-        ];
-		const lainlainVariants = [
-            { id: 'lainlain-1', name: 'Gas Melon', price: 21000 },
-            { id: 'lainlain-2', name: 'Materai', price: 12000 },
-            { id: 'lainlain-3', name: 'Tepung Terigu', price: 5000 },
-            { id: 'lainlain-4', name: 'Buku Tulis', price: 6000 }
-        ];
-		const pertanianVariants = [
-            { id: 'pertanian-1', name: 'Pupuk A', price: 21000 },
-            { id: 'pertanian-2', name: 'Pupuk B', price: 12000 },
-            { id: 'pertanian-3', name: 'Pestisida A', price: 5000 },
-            { id: 'pertanian-4', name: 'Pestisida B', price: 6000 }
-        ];
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-modal-content">
+            <span class="close" onclick="closeGallery()">&times;</span>
+            <h2 id="galleryTitle">Galeri Foto</h2>
+            <div id="galleryGrid" class="gallery-grid"></div>
+        </div>
+    </div>
 
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <script>
+        // Data Produk dengan path foto yang sesuai
+        const productData = {
+            beras: {
+                variants: [
+                    { id: 'beras-1', name: 'Beras Putih Premium', price: 12000 },
+                    { id: 'beras-2', name: 'Beras Merah Organik', price: 15000 },
+                    { id: 'beras-3', name: 'Beras Hitam Premium', price: 18000 },
+                    { id: 'beras-4', name: 'Beras Ketan Putih', price: 13000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/beras/beras-putih-premium.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/beras/beras-merah-organik.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/beras/beras-hitam-premium.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/beras/beras-ketan-putih.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/beras/beras-premium.jpg'
+                ]
+            },
+            sayuran: {
+                variants: [
+                    { id: 'sayuran-1', name: 'Kangkung Organik', price: 3000 },
+                    { id: 'sayuran-2', name: 'Bayam Merah', price: 3500 },
+                    { id: 'sayuran-3', name: 'Sawi Hijau', price: 4000 },
+                    { id: 'sayuran-4', name: 'Tomat Cherry', price: 8000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/sayuran/kangkung-organik.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/sayuran/bayam-merah.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/sayuran/sawi-hijau.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/sayuran/tomat-cherry.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/sayuran/sayuran-organik.jpg'
+                ]
+            },
+            ikan: {
+                variants: [
+                    { id: 'ikan-1', name: 'Ikan Lele Segar', price: 18000 },
+                    { id: 'ikan-2', name: 'Ikan Nila Segar', price: 25000 },
+                    { id: 'ikan-3', name: 'Ikan Gurame', price: 35000 },
+                    { id: 'ikan-4', name: 'Ikan Bandeng', price: 22000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/ikan/ikan-lele.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/ikan/ikan-nila.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/ikan/ikan-gurame.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/ikan/ikan-bandeng.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/ikan/ikan-segar.jpg'
+                ]
+            },
+            daging: {
+                variants: [
+                    { id: 'daging-1', name: 'Daging Sapi Segar', price: 120000 },
+                    { id: 'daging-2', name: 'Daging Kambing', price: 110000 },
+                    { id: 'daging-3', name: 'Daging Ayam Kampung', price: 85000 },
+                    { id: 'daging-4', name: 'Daging Bebek', price: 75000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/daging/daging-sapi.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/daging/daging-kambing.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/daging/ayam-kampung.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/daging/daging-bebek.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/daging/daging-segar.jpg'
+                ]
+            },
+            telur: {
+                variants: [
+                    { id: 'telur-1', name: 'Telur Ayam Kampung', price: 2500 },
+                    { id: 'telur-2', name: 'Telur Ayam Ras', price: 1800 },
+                    { id: 'telur-3', name: 'Telur Bebek', price: 3000 },
+                    { id: 'telur-4', name: 'Telur Puyuh', price: 500 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/telur/telur-ayam-kampung.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/telur/telur-ayam-ras.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/telur/telur-bebek.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/telur/telur-puyuh.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/telur/telur-segar.jpg'
+                ]
+            },
+            olahan: {
+                variants: [
+                    { id: 'olahan-1', name: 'Tempe Kedelai Organik', price: 8000 },
+                    { id: 'olahan-2', name: 'Tahu Putih', price: 5000 },
+                    { id: 'olahan-3', name: 'Kerupuk Ikan', price: 15000 },
+                    { id: 'olahan-4', name: 'Sambal Pecel', price: 12000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/olahan/tempe-organik.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/olahan/tahu-putih.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/olahan/kerupuk-ikan.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/olahan/sambal-pecel.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/olahan/produk-olahan.jpg'
+                ]
+            },
+            minuman: {
+                variants: [
+                    { id: 'minuman-1', name: 'Jamu Kunyit Asam', price: 8000 },
+                    { id: 'minuman-2', name: 'Es Kelapa Muda', price: 12000 },
+                    { id: 'minuman-3', name: 'Wedang Jahe', price: 5000 },
+                    { id: 'minuman-4', name: 'Teh Daun Mint', price: 6000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/minuman/jamu-kunyit-asam.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/minuman/kelapa-muda.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/minuman/wedang-jahe.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/minuman/teh-mint.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/minuman/minuman-tradisional.jpg'
+                ]
+            },
+            lainlain: {
+                variants: [
+                    { id: 'lainlain-1', name: 'Gas Melon', price: 21000 },
+                    { id: 'lainlain-2', name: 'Materai', price: 12000 },
+                    { id: 'lainlain-3', name: 'Tepung Terigu', price: 5000 },
+                    { id: 'lainlain-4', name: 'Buku Tulis', price: 6000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/lainlain/gas-melon.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/lainlain/materai.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/lainlain/tepung-terigu.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/lainlain/buku-tulis.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/lainlain/produk-lainlain.jpg'
+                ]
+            },
+            pertanian: {
+                variants: [
+                    { id: 'pertanian-1', name: 'Pupuk A', price: 21000 },
+                    { id: 'pertanian-2', name: 'Pupuk B', price: 12000 },
+                    { id: 'pertanian-3', name: 'Pestisida A', price: 25000 },
+                    { id: 'pertanian-4', name: 'Pestisida B', price: 18000 }
+                ],
+                photos: [
+                    'KDMP-Kedungsari/koperasi-website/images/pertanian/pupuk-a.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/pertanian/pupuk-b.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/pertanian/pestisida-a.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/pertanian/pestisida-b.jpg',
+                    'KDMP-Kedungsari/koperasi-website/images/pertanian/produk-pertanian.jpg'
+                ]
+            }
+        };
+
+        // State management menggunakan memori JavaScript
+        let cart = [];
+        let selectedVariants = {};
         
         const cartCountDesktop = document.getElementById('cartCountDesktop');
         const cartCountMobile = document.getElementById('cartCountMobile');
         const cartItemsContainer = document.getElementById('cartItemsContainer');
         const cartTotalAmount = document.getElementById('cartTotalAmount');
         const emptyCartMessage = document.getElementById('emptyCartMessage');
-        const orderModal = document.getElementById('orderModal');
         const cartModal = document.getElementById('cartModal');
-
-        let currentProduct = null;
-        let selectedVariant = null;
+        const galleryModal = document.getElementById('galleryModal');
+        const notification = document.getElementById('notification');
 
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -1171,78 +1488,25 @@
         }
 
         function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR', 
+                minimumFractionDigits: 0 
+            }).format(number);
         }
 
-        function openOrderModal(productName, productSKU, variants) {
-            document.getElementById('modalProductName').innerText = productName;
-            document.getElementById('modalProductSKU').innerText = productSKU;
-            const variantsContainer = document.getElementById('modalProductVariants');
-            variantsContainer.innerHTML = '';
-            variants.forEach(variant => {
-                const variantDiv = document.createElement('div');
-                variantDiv.classList.add('variant-item', 'modal-variant');
-                variantDiv.innerHTML = `
-                    <label>
-                        <input type="radio" name="variant" value="${variant.id}" data-price="${variant.price}" data-name="${variant.name}" required>
-                        <span class="variant-name">${variant.name}</span>
-                    </label>
-                    <span class="variant-price">${formatRupiah(variant.price)}</span>
-                `;
-                variantsContainer.appendChild(variantDiv);
-            });
-
-            document.getElementById('quantityInput').value = 1;
-            orderModal.style.display = 'block';
-
-            document.querySelectorAll('input[name="variant"]').forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    selectedVariant = {
-                        id: e.target.value,
-                        name: e.target.dataset.name,
-                        price: parseInt(e.target.dataset.price)
-                    };
-                });
-            });
-
-            const addToCartBtn = document.getElementById('addToCartBtn');
-            addToCartBtn.onclick = () => {
-                if (selectedVariant) {
-                    const quantity = parseInt(document.getElementById('quantityInput').value);
-                    addToCart(productName, productSKU, selectedVariant, quantity);
-                    closeOrderModal();
-                } else {
-                    alert('Mohon pilih varian produk terlebih dahulu.');
-                }
-            };
+        function showNotification(message, isError = false) {
+            const notificationText = document.getElementById('notificationText');
+            notificationText.innerText = message;
+            notification.className = `notification ${isError ? 'error' : ''} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        function closeOrderModal() {
-            orderModal.style.display = 'none';
-            selectedVariant = null;
-        }
-
-        function addToCart(productName, productSKU, variant, quantity) {
-            const existingItem = cart.find(item => item.variantId === variant.id);
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    productId: productSKU,
-                    productName: productName,
-                    variantId: variant.id,
-                    variantName: variant.name,
-                    price: variant.price,
-                    quantity: quantity
-                });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            alert(`${quantity} ${variant.name} ditambahkan ke keranjang!`);
-        }
-        
-        function changeQuantity(change) {
-            const quantityInput = document.getElementById('quantityInput');
+        function changeProductQuantity(productId, change) {
+            const quantityInput = document.getElementById(productId + '-qty');
             let currentQuantity = parseInt(quantityInput.value);
             currentQuantity += change;
             if (currentQuantity < 1) {
@@ -1251,15 +1515,102 @@
             quantityInput.value = currentQuantity;
         }
 
+        function quickAddToCart(productId, productName, productSKU) {
+            const quantityInput = document.getElementById(productId + '-qty');
+            const quantity = parseInt(quantityInput.value);
+            
+            // Ambil variant yang dipilih atau variant pertama jika belum dipilih
+            const category = productId.replace('-product', '');
+            const productVariants = productData[category]?.variants || [];
+            
+            if (productVariants.length === 0) {
+                showNotification('Produk tidak tersedia', true);
+                return;
+            }
+
+            // Jika ada variant yang dipilih, gunakan itu. Jika tidak, gunakan variant pertama
+            const selectedVariant = selectedVariants[productId] || productVariants[0];
+            
+            const existingItem = cart.find(item => 
+                item.variantId === selectedVariant.id && item.productId === productSKU
+            );
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    productId: productSKU,
+                    productName: productName,
+                    variantId: selectedVariant.id,
+                    variantName: selectedVariant.name,
+                    price: selectedVariant.price,
+                    quantity: quantity
+                });
+            }
+            
+            updateCartCount();
+            showNotification(`${quantity} ${selectedVariant.name} ditambahkan ke keranjang!`);
+            
+            // Reset quantity ke 1
+            quantityInput.value = 1;
+        }
+
+        function selectVariant(productId, variantData) {
+            selectedVariants[productId] = variantData;
+            
+            // Update visual feedback untuk variant yang dipilih
+            const productCard = document.querySelector(`[data-category="${productId.replace('-product', '')}"]`);
+            const variantItems = productCard.querySelectorAll('.variant-item');
+            
+            variantItems.forEach(item => {
+                item.classList.remove('selected');
+                if (item.dataset.variant === variantData.id) {
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+        function openGallery(category) {
+            const galleryTitle = document.getElementById('galleryTitle');
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            galleryTitle.innerText = `Galeri Foto - ${category.charAt(0).toUpperCase() + category.slice(1)}`;
+            galleryGrid.innerHTML = '';
+            
+            const photos = productData[category]?.photos || [];
+            
+            if (photos.length === 0) {
+                galleryGrid.innerHTML = '<p style="text-align: center; color: #666;">Belum ada foto untuk kategori ini</p>';
+            } else {
+                photos.forEach((photo, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.innerHTML = `
+                        <img src="${photo}" alt="${category} ${index + 1}" 
+                             onerror="this.parentElement.innerHTML='<div style=\\'padding: 50px; text-align: center; color: #999;\\'>Foto tidak tersedia</div>'">
+                    `;
+                    galleryGrid.appendChild(galleryItem);
+                });
+            }
+            
+            galleryModal.style.display = 'block';
+        }
+
+        function closeGallery() {
+            galleryModal.style.display = 'none';
+        }
+
         function renderCartItems() {
             cartItemsContainer.innerHTML = '';
             let total = 0;
+            
             if (cart.length === 0) {
                 emptyCartMessage.classList.remove('hidden');
                 document.querySelector('.cart-total').classList.add('hidden');
             } else {
                 emptyCartMessage.classList.add('hidden');
                 document.querySelector('.cart-total').classList.remove('hidden');
+                
                 cart.forEach((item, index) => {
                     const itemTotal = item.price * item.quantity;
                     total += itemTotal;
@@ -1289,7 +1640,6 @@
             if (cart[index].quantity <= 0) {
                 removeCartItem(index);
             } else {
-                localStorage.setItem('cart', JSON.stringify(cart));
                 renderCartItems();
                 updateCartCount();
             }
@@ -1297,7 +1647,6 @@
 
         function removeCartItem(index) {
             cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
             renderCartItems();
             updateCartCount();
         }
@@ -1313,15 +1662,14 @@
         
         function clearCart() {
             cart = [];
-            localStorage.removeItem('cart');
             renderCartItems();
             updateCartCount();
-            alert('Keranjang belanja berhasil dikosongkan.');
+            showNotification('Keranjang belanja berhasil dikosongkan.');
         }
 
         function checkout() {
             if (cart.length === 0) {
-                alert('Keranjang Anda kosong. Tambahkan produk untuk checkout.');
+                showNotification('Keranjang Anda kosong. Tambahkan produk untuk checkout.', true);
                 return;
             }
 
@@ -1355,10 +1703,50 @@
             document.querySelector(`.category-btn[onclick="filterProducts('${category}')"]`).classList.add('active');
         }
 
+        // Event listener untuk memilih variant
+        function initializeVariantSelection() {
+            document.querySelectorAll('.variant-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const category = productCard.dataset.category;
+                    const productId = category + '-product';
+                    const variantId = this.dataset.variant;
+                    const variantPrice = parseInt(this.dataset.price);
+                    const variantName = this.querySelector('.variant-name').textContent;
+                    
+                    selectVariant(productId, {
+                        id: variantId,
+                        name: variantName,
+                        price: variantPrice
+                    });
+                });
+            });
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             updateCartCount();
+            initializeVariantSelection();
+            
+            // Set variant pertama sebagai default untuk setiap produk
+            Object.keys(productData).forEach(category => {
+                const productId = category + '-product';
+                const firstVariant = productData[category].variants[0];
+                if (firstVariant) {
+                    selectedVariants[productId] = firstVariant;
+                }
+            });
         });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === cartModal) {
+                closeCart();
+            }
+            if (event.target === galleryModal) {
+                closeGallery();
+            }
+        }
     </script>
 </body>
 </html>
