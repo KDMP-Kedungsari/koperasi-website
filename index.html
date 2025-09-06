@@ -1357,7 +1357,7 @@
             });
 
             message += `\nTotal Belanja: ${formatRupiah(total)}`;
-            message += `\n\nNama: [Isi nama Anda]\nAlamat: [Isi alamat Anda]\nCatatan: [Isi catatan tambahan, contoh: "Bayar di tempat"]`;
+            message += `\n\nNama: [Isi nama Anda]\nAlamat: [Isi alamat Anda]\nCatatan: [Isi catatan tambahan, contoh: \"Bayar di tempat\"]`;
 
             const whatsappUrl = `https://wa.me/628129683690?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
@@ -1374,7 +1374,57 @@
             });
 
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.category-btn[onclick="filterProducts('${category}')"]`).classList.add('active');
+            document.querySelector(`.category-btn[onclick=\"filterProducts('${category}')\"]`).classList.add('active');
+        }
+
+        // --- Mulai dari sini adalah kode untuk Galeri Foto ---
+        function openGallery(category) {
+            // Data nama file gambar per kategori.
+            const images = {
+                'beras': ['beras-premium.jpg', 'beras-putih-premium.jpg', 'beras-merah-organik.jpg'],
+                'sayuran': ['sayuran-organik.jpg', 'kangkung-organik.jpg'],
+                'ikan': ['ikan-lele.jpg', 'ikan-nila.jpg'],
+                'daging': ['daging-sapi.jpg', 'daging-ayam.jpg'],
+                'telur': ['telur-ayam.jpg', 'telur-bebek.jpg'],
+                'olahan': ['tempe.jpg', 'tahu.jpg'],
+                'minuman': ['jamu.jpg', 'es-kelapa.jpg'],
+                'lainlain': ['gas-melon.jpg', 'materai.jpg'],
+                'pertanian': ['pupuk.jpg', 'pestisida.jpg'],
+            };
+
+            const imageList = images[category] || [];
+            if (imageList.length === 0) {
+                alert('Belum ada gambar untuk kategori ini.');
+                return;
+            }
+
+            const galleryHtml = imageList.map(img => `
+                <img src="images/${category}/${img}" alt="${img.replace('.jpg', '')}" style="width:100%; max-width: 400px; margin: 10px; border-radius: 10px;">
+            `).join('');
+
+            const galleryModal = document.createElement('div');
+            galleryModal.style.position = 'fixed';
+            galleryModal.style.top = '0';
+            galleryModal.style.left = '0';
+            galleryModal.style.width = '100%';
+            galleryModal.style.height = '100%';
+            galleryModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            galleryModal.style.display = 'flex';
+            galleryModal.style.flexDirection = 'column';
+            galleryModal.style.justifyContent = 'center';
+            galleryModal.style.alignItems = 'center';
+            galleryModal.style.zIndex = '3000';
+            galleryModal.style.overflowY = 'auto';
+
+            galleryModal.innerHTML = `
+                <span style="position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer;">&times;</span>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; padding: 20px;">
+                    ${galleryHtml}
+                </div>
+            `;
+
+            document.body.appendChild(galleryModal);
+            galleryModal.querySelector('span').onclick = () => document.body.removeChild(galleryModal);
         }
 
         // Initialize on page load
