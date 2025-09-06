@@ -736,6 +736,30 @@
         .photo-gallery:hover {
             background: rgba(0, 0, 0, 0.7);
         }
+
+        /* Gaya baru untuk galeri dan keterangan foto */
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            padding: 15px;
+        }
+        .gallery-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .gallery-caption {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1379,17 +1403,45 @@
 
         // --- Mulai dari sini adalah kode untuk Galeri Foto ---
         function openGallery(category) {
-            // Data nama file gambar per kategori.
+            // Data gambar diubah menjadi array of objects
             const images = {
-                'beras': ['beras-premium.jpg', 'beras-putih-premium.jpg', 'beras-merah-organik.jpg'],
-                'sayuran': ['sayuran-organik.jpg', 'kangkung-organik.jpg'],
-                'ikan': ['ikan-lele.jpg', 'ikan-nila.jpg'],
-                'daging': ['daging-sapi.jpg', 'daging-ayam.jpg'],
-                'telur': ['telur-ayam.jpg', 'telur-bebek.jpg'],
-                'olahan': ['tempe.jpg', 'tahu.jpg'],
-                'minuman': ['jamu.jpg', 'es-kelapa.jpg'],
-                'lainlain': ['gas-melon.jpg', 'materai.jpg'],
-                'pertanian': ['pupuk.jpg', 'pestisida.jpg'],
+                'beras': [
+                    { filename: 'beras-premium.jpg', caption: 'Beras Premium, pulen dan wangi.' },
+                    { filename: 'beras-putih-premium.jpg', caption: 'Beras putih premium dari sawah lokal.' },
+                    { filename: 'beras-merah-organik.jpg', caption: 'Beras merah organik, sehat dan kaya serat.' }
+                ],
+                'sayuran': [
+                    { filename: 'sayuran-organik.jpg', caption: 'Aneka sayuran segar dan organik.' },
+                    { filename: 'kangkung-organik.jpg', caption: 'Kangkung organik segar baru panen.' }
+                ],
+                'ikan': [
+                    { filename: 'ikan-lele.jpg', caption: 'Ikan lele segar dari kolam.' },
+                    { filename: 'ikan-nila.jpg', caption: 'Ikan nila segar.' }
+                ],
+                'daging': [
+                    { filename: 'daging-sapi.jpg', caption: 'Daging sapi segar kualitas terbaik.' },
+                    { filename: 'daging-ayam.jpg', caption: 'Daging ayam kampung.' }
+                ],
+                'telur': [
+                    { filename: 'telur-ayam.jpg', caption: 'Telur ayam kampung organik.' },
+                    { filename: 'telur-bebek.jpg', caption: 'Telur bebek segar.' }
+                ],
+                'olahan': [
+                    { filename: 'tempe.jpg', caption: 'Tempe kedelai organik, diolah secara tradisional.' },
+                    { filename: 'tahu.jpg', caption: 'Tahu putih segar.' }
+                ],
+                'minuman': [
+                    { filename: 'jamu.jpg', caption: 'Jamu kunyit asam, resep tradisional.' },
+                    { filename: 'es-kelapa.jpg', caption: 'Es kelapa muda segar.' }
+                ],
+                'lainlain': [
+                    { filename: 'gas-melon.jpg', caption: 'Gas melon 3kg, tersedia.' },
+                    { filename: 'materai.jpg', caption: 'Materai 10000.' }
+                ],
+                'pertanian': [
+                    { filename: 'pupuk.jpg', caption: 'Pupuk A, untuk kesuburan tanah.' },
+                    { filename: 'pestisida.jpg', caption: 'Pestisida B, untuk hama tanaman.' }
+                ],
             };
 
             const imageList = images[category] || [];
@@ -1398,8 +1450,11 @@
                 return;
             }
 
-            const galleryHtml = imageList.map(img => `
-                <img src="images/${category}/${img}" alt="${img.replace('.jpg', '')}" style="width:100%; max-width: 400px; margin: 10px; border-radius: 10px;">
+            const galleryHtml = imageList.map(item => `
+                <div class="gallery-item">
+                    <img src="images/${category}/${item.filename}" alt="${item.caption}">
+                    <div class="gallery-caption">${item.caption}</div>
+                </div>
             `).join('');
 
             const galleryModal = document.createElement('div');
