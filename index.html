@@ -798,14 +798,15 @@
             <div class="category-filters">
                 <button class="category-btn active" onclick="filterGallery('all')">Semua Produk</button>
                 <button class="category-btn" onclick="filterGallery('beras')">Beras</button>
+                <button class="category-btn" onclick="filterGallery('minyakgoreng')">Minyak Goreng</button>
                 <button class="category-btn" onclick="filterGallery('sayuran')">Sayuran</button>
                 <button class="category-btn" onclick="filterGallery('ikan')">Ikan</button>
                 <button class="category-btn" onclick="filterGallery('daging')">Daging</button>
                 <button class="category-btn" onclick="filterGallery('telur')">Telur</button>
                 <button class="category-btn" onclick="filterGallery('olahan')">Olahan</button>
                 <button class="category-btn" onclick="filterGallery('minuman')">Minuman</button>
-                <button class="category-btn" onclick="filterGallery('lainlain')">Lain-lain</button>
                 <button class="category-btn" onclick="filterGallery('pertanian')">Pertanian</button>
+                <button class="category-btn" onclick="filterGallery('lainlain')">Lain-lain</button>
             </div>
 
             <div class="gallery-grid" id="galleryGrid">
@@ -945,6 +946,20 @@
                 stockCount: 0
             },
 
+            // Minyak Goreng
+            {
+                id: 'minyakgoreng-1',
+                category: 'minyakgoreng',
+                title: 'Minyak Goreng Kita',
+                description: 'Minyak Goreng Kelapa sawit bersubsidi',
+                price: 15000,
+                unit: 'liter',
+                image: 'images/beras/minyak-goreng-kita.jpg',
+                fallbackEmoji: '🌾',
+                stock: 'available',
+                stockCount: 50
+            },
+            
             // Sayuran
             {
                 id: 'sayuran-1',
@@ -1001,7 +1016,7 @@
                 category: 'ikan',
                 title: 'Ikan Lele Segar',
                 description: 'Ikan lele segar dari kolam lokal, kaya protein dan omega-3',
-                price: 18000,
+                price: 25000,
                 unit: 'kg',
                 image: 'images/ikan/ikan-lele.jpg',
                 fallbackEmoji: '🐟',
@@ -1650,6 +1665,7 @@
     </script>
 </body>
 </html>
+
 
 
 
