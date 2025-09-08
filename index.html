@@ -412,8 +412,8 @@
             <h2>Produk Unggulan Kami</h2>
             <p>Lihat pilihan terbaik kami yang paling banyak diminati oleh pelanggan setia.</p>
             <div class="product-grid">
-                <a href="index_foto_galery.html" class="product-card">
-                    <img src="./assets/image_542782.jpg" alt="Produk 1" class="product-image">
+                <a href="index_foto_galery.html#kerajinan-kulit-kayu" class="product-card">
+                    <img src="./assets/image_542782.jpg" alt="Kerajinan Kulit Kayu" class="product-image">
                     <div class="product-content">
                         <h3 class="product-title">Kerajinan Kulit Kayu</h3>
                         <p class="product-description">
@@ -421,8 +421,8 @@
                         </p>
                     </div>
                 </a>
-                <a href="index_foto_galery.html" class="product-card">
-                    <img src="./assets/image_5424a0.png" alt="Produk 2" class="product-image">
+                <a href="index_foto_galery.html#gula-jawa-asli" class="product-card">
+                    <img src="./assets/image_5424a0.png" alt="Gula Jawa Asli" class="product-image">
                     <div class="product-content">
                         <h3 class="product-title">Gula Jawa Asli</h3>
                         <p class="product-description">
@@ -516,8 +516,8 @@
             });
         }, observerOptions);
 
-        // Observe feature cards and product cards
-        document.querySelectorAll('.feature-card, .contact-item, .product-card').forEach((card, index) => {
+        // Observe feature cards, product cards, and contact items
+        document.querySelectorAll('.feature-card, .product-card, .contact-item').forEach((card, index) => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
             card.style.transition = `all 0.6s ease ${index * 0.1}s`;
