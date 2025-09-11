@@ -242,16 +242,29 @@
             transform: scale(1.05);
         }
 
-        .stock-badge {
+        .badges-container {
             position: absolute;
             top: 15px;
             right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .badge {
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
             text-transform: uppercase;
             backdrop-filter: blur(10px);
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .stock-badge {
+            /* Stock badge styles */
         }
 
         .stock-available {
@@ -267,6 +280,29 @@
         .stock-out {
             background: rgba(220, 53, 69, 0.9);
             color: white;
+        }
+
+        .promo-badge {
+            background: rgba(255, 20, 147, 0.9);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .new-badge {
+            background: rgba(0, 123, 255, 0.9);
+            color: white;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+            to { box-shadow: 0 0 20px rgba(0, 123, 255, 0.8); }
         }
 
         .gallery-item-content {
@@ -477,6 +513,63 @@
 
         .close:hover {
             color: #333;
+        }
+
+        .admin-selection {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .admin-selection h3 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .admin-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .admin-card.selected {
+            border-color: #25d366;
+            background: #e8f5e8;
+        }
+
+        .admin-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .admin-phone {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .admin-status {
+            font-size: 0.8rem;
+            color: #28a745;
+            font-weight: bold;
         }
 
         .cart-item {
@@ -744,6 +837,15 @@
             .quantity-selector {
                 justify-content: space-between;
             }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badges-container {
+                right: 10px;
+                top: 10px;
+            }
         }
 
         .hidden {
@@ -821,7 +923,7 @@
             <h2 class="section-title">Mengapa Memilih Kami?</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🏪</div>
+                    <div class="feature-icon">🍪</div>
                     <h3>Produk Lokal Berkualitas</h3>
                     <p>Kami menyediakan produk-produk unggulan dari masyarakat lokal dengan standar kualitas terbaik</p>
                 </div>
@@ -873,6 +975,14 @@
         <div class="cart-modal-content">
             <span class="close" onclick="closeCart()">&times;</span>
             <h2>Keranjang Belanja 🛒</h2>
+            
+            <div class="admin-selection">
+                <h3>Pilih Admin untuk Pemesanan</h3>
+                <div class="admin-grid" id="adminGrid">
+                    <!-- Admin cards will be populated by JavaScript -->
+                </div>
+            </div>
+            
             <div id="cartItemsContainer"></div>
             <div id="emptyCartMessage" class="empty-cart hidden">
                 <p>Keranjang Anda kosong. Yuk, belanja sekarang!</p>
@@ -895,6 +1005,45 @@
     </div>
 
     <script>
+        // Data admin WhatsApp
+        const adminList = [
+            {
+                id: 'admin-1',
+                name: 'Ika Diana',
+                phone: '6288802751611',
+                status: 'Online',
+                role: 'Admin Penjualan'
+            },
+            {
+                id: 'admin-2',
+                name: 'Eko Kusrianto',
+                phone: '628129683690',
+                status: 'Online',
+                role: 'Admin Penjualan'
+            },
+            {
+                id: 'admin-3',
+                name: 'Suprapto',
+                phone: '62895331113616',
+                status: 'Online',
+                role: 'Admin Penjualan'
+            },
+            {
+                id: 'admin-4',
+                name: 'Margilan',
+                phone: '6288806174649',
+                status: 'Online',
+                role: 'Admin Penjualan'
+            },
+            {
+                id: 'admin-5',
+                name: 'Anung',
+                phone: '6285292001668',
+                status: 'Online',
+                role: 'Admin Penjualan'
+            }
+        ];
+
         // Data produk dengan informasi lengkap
         const productGallery = [
             // Beras
@@ -908,7 +1057,9 @@
                 image: 'images/beras/beras-sphp-bulog.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'available',
-                stockCount: 50
+                stockCount: 50,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'beras-2',
@@ -920,7 +1071,9 @@
                 image: 'images/beras/beras-impari32.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'available',
-                stockCount: 30
+                stockCount: 30,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'beras-3',
@@ -932,7 +1085,9 @@
                 image: 'images/beras/beras-ketan-putih.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
              // Gula
@@ -944,9 +1099,11 @@
                 price: 17500,
                 unit: 'kg',
                 image: 'images/gula/gula-pasir-putih.jpg',
-                fallbackEmoji: '🌾',
+                fallbackEmoji: '🍯',
                 stock: 'available',
-                stockCount: 50
+                stockCount: 50,
+				isPromo: false,
+                isNew: true
             },       
 
             // Sayuran
@@ -960,7 +1117,9 @@
                 image: 'images/sayuran/kangkung-organik.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'sayuran-2',
@@ -972,7 +1131,9 @@
                 image: 'images/sayuran/bayam-merah.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'sayuran-3',
@@ -984,7 +1145,9 @@
                 image: 'images/sayuran/sawi-hijau.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'sayuran-4',
@@ -996,7 +1159,9 @@
                 image: 'images/sayuran/tomat-cherry.jpg',
                 fallbackEmoji: '🍅',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Ikan
@@ -1010,7 +1175,9 @@
                 image: 'images/ikan/ikan-lele.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'available',
-                stockCount: 20
+                stockCount: 20,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'ikan-2',
@@ -1022,7 +1189,9 @@
                 image: 'images/ikan/ikan-nila.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'available',
-                stockCount: 18
+                stockCount: 18,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'ikan-3',
@@ -1034,7 +1203,9 @@
                 image: 'images/ikan/ikan-gurame.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'ikan-4',
@@ -1046,7 +1217,9 @@
                 image: 'images/ikan/ikan-bandeng.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Daging
@@ -1060,7 +1233,9 @@
                 image: 'images/daging/daging-sapi.jpg',
                 fallbackEmoji: '🥩',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'daging-2',
@@ -1072,7 +1247,9 @@
                 image: 'images/daging/daging-kambing.jpg',
                 fallbackEmoji: '🥩',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'daging-3',
@@ -1084,7 +1261,9 @@
                 image: 'images/daging/ayam-kampung.jpg',
                 fallbackEmoji: '🐔',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'daging-4',
@@ -1096,7 +1275,9 @@
                 image: 'images/daging/daging-bebek.jpg',
                 fallbackEmoji: '🦆',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Telur
@@ -1110,7 +1291,9 @@
                 image: 'images/telur/telur-ayam-kampung.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'telur-2',
@@ -1122,7 +1305,9 @@
                 image: 'images/telur/telur-ayam-ras.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'available',
-                stockCount: 150
+                stockCount: 150,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'telur-3',
@@ -1134,7 +1319,9 @@
                 image: 'images/telur/telur-bebek.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'available',
-                stockCount: 60
+                stockCount: 60,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'telur-4',
@@ -1146,7 +1333,9 @@
                 image: 'images/telur/telur-puyuh.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Olahan
@@ -1160,7 +1349,9 @@
                 image: 'images/olahan/tempe-organik.jpg',
                 fallbackEmoji: '🍜',
                 stock: 'available',
-                stockCount: 30
+                stockCount: 30,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-2',
@@ -1172,7 +1363,9 @@
                 image: 'images/olahan/tahu-putih.jpg',
                 fallbackEmoji: '🍜',
                 stock: 'available',
-                stockCount: 40
+                stockCount: 40,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-3',
@@ -1184,7 +1377,9 @@
                 image: 'images/olahan/kerupuk-ikan.jpg',
                 fallbackEmoji: '🍘',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-4',
@@ -1196,7 +1391,9 @@
                 image: 'images/olahan/sambal-pecel.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-5',
@@ -1208,7 +1405,9 @@
                 image: 'images/olahan/cireng-ayam-pedas.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-6',
@@ -1220,7 +1419,9 @@
                 image: 'images/olahan/peyek-kacang-tanah.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'available',
-                stockCount: 20
+                stockCount: 20,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'olahan-6',
@@ -1232,7 +1433,9 @@
                 image: 'images/olahan/peyek-kacang-tholo.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'available',
-                stockCount: 20
+                stockCount: 20,
+				isPromo: false,
+                isNew: true
             },
             
             // Minuman
@@ -1246,7 +1449,9 @@
                 image: 'images/minuman/jamu-kunyit-asam.jpg',
                 fallbackEmoji: '🥤',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'minuman-2',
@@ -1258,7 +1463,9 @@
                 image: 'images/minuman/kelapa-muda.jpg',
                 fallbackEmoji: '🥥',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'minuman-3',
@@ -1270,7 +1477,9 @@
                 image: 'images/minuman/wedang-jahe.jpg',
                 fallbackEmoji: '☕',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'minuman-4',
@@ -1282,7 +1491,9 @@
                 image: 'images/minuman/teh-mint.jpg',
                 fallbackEmoji: '🍵',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Lain-lain
@@ -1296,7 +1507,9 @@
                 image: 'images/lainlain/gas-melon.jpg',
                 fallbackEmoji: '⛽',
                 stock: 'available',
-                stockCount: 15
+                stockCount: 15,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'lainlain-2',
@@ -1308,7 +1521,9 @@
                 image: 'images/lainlain/materai.jpg',
                 fallbackEmoji: '📋',
                 stock: 'available',
-                stockCount: 100
+                stockCount: 100,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'lainlain-3',
@@ -1320,7 +1535,9 @@
                 image: 'images/lainlain/tepung-terigu.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'lainlain-4',
@@ -1332,7 +1549,9 @@
                 image: 'images/lainlain/buku-tulis.jpg',
                 fallbackEmoji: '📓',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
 
             // Pertanian
@@ -1346,7 +1565,9 @@
                 image: 'images/pertanian/benih-padi-inpari32.jpg',
                 fallbackEmoji: '🌱',
                 stock: 'available',
-                stockCount: 20
+                stockCount: 20,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'pertanian-2',
@@ -1358,7 +1579,9 @@
                 image: 'images/pertanian/pupuk-npk.jpg',
                 fallbackEmoji: '🌱',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'pertanian-3',
@@ -1370,7 +1593,9 @@
                 image: 'images/pertanian/pupuk-kohe.jpg',
                 fallbackEmoji: '🧴',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             },
             {
                 id: 'pertanian-4',
@@ -1382,12 +1607,15 @@
                 image: 'images/pertanian/media-tanam.jpg',
                 fallbackEmoji: '🧴',
                 stock: 'out',
-                stockCount: 0
+                stockCount: 0,
+				isPromo: false,
+                isNew: true
             }
         ];
 
         // State management menggunakan memori JavaScript
         let cart = [];
+        let selectedAdminPhone = adminList[0].phone;
         
         const cartCountDesktop = document.getElementById('cartCountDesktop');
         const cartCountMobile = document.getElementById('cartCountMobile');
@@ -1421,14 +1649,29 @@
             }, 3000);
         }
 
-        function getStockBadge(stock, stockCount) {
-            if (stockCount === 0 || stock === 'out') {
-                return '<div class="stock-badge stock-out">Habis</div>';
-            } else if (stockCount <= 10 || stock === 'low') {
-                return '<div class="stock-badge stock-low">Stok Terbatas</div>';
+        function getBadges(product) {
+            let badges = '';
+            
+            // Stock badge
+            if (product.stockCount === 0 || product.stock === 'out') {
+                badges += '<div class="badge stock-badge stock-out">Habis</div>';
+            } else if (product.stockCount <= 10 || product.stock === 'low') {
+                badges += '<div class="badge stock-badge stock-low">Stok Terbatas</div>';
             } else {
-                return '<div class="stock-badge stock-available">Tersedia</div>';
+                badges += '<div class="badge stock-badge stock-available">Tersedia</div>';
             }
+            
+            // Promo badge
+            if (product.isPromo) {
+                badges += '<div class="badge promo-badge">PROMO</div>';
+            }
+            
+            // New badge
+            if (product.isNew) {
+                badges += '<div class="badge new-badge">BARU</div>';
+            }
+            
+            return badges;
         }
 
         function changeQuantity(productId, change) {
@@ -1490,6 +1733,27 @@
             quantityInput.value = 1;
         }
 
+        function renderAdminSelection() {
+            const adminGrid = document.getElementById('adminGrid');
+            adminGrid.innerHTML = '';
+            adminList.forEach(admin => {
+                const adminCard = document.createElement('div');
+                adminCard.className = `admin-card ${selectedAdminPhone === admin.phone ? 'selected' : ''}`;
+                adminCard.onclick = () => selectAdmin(admin.phone);
+                adminCard.innerHTML = `
+                    <div class="admin-name">${admin.name}</div>
+                    <div class="admin-phone">${admin.role}</div>
+                    <div class="admin-status">${admin.status}</div>
+                `;
+                adminGrid.appendChild(adminCard);
+            });
+        }
+
+        function selectAdmin(phone) {
+            selectedAdminPhone = phone;
+            renderAdminSelection();
+        }
+
         function renderGallery(filter = 'all') {
             const galleryGrid = document.getElementById('galleryGrid');
             galleryGrid.innerHTML = '';
@@ -1510,7 +1774,9 @@
                         <img src="${product.image}" alt="${product.title}" 
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-image-placeholder" style="display: none; font-size: 4rem; color: #adb5bd; display: flex; align-items: center; justify-content: center; height: 100%;">${product.fallbackEmoji}</div>
-                        ${getStockBadge(product.stock, product.stockCount)}
+                        <div class="badges-container">
+                            ${getBadges(product)}
+                        </div>
                     </div>
                     <div class="gallery-item-content">
                         <div class="item-category">${product.category}</div>
@@ -1603,13 +1869,14 @@
 
         function openCart() {
             renderCartItems();
+            renderAdminSelection();
             cartModal.style.display = 'block';
         }
 
         function closeCart() {
             cartModal.style.display = 'none';
         }
-        
+
         function clearCart() {
             cart = [];
             renderCartItems();
@@ -1623,7 +1890,8 @@
                 return;
             }
 
-            let message = 'Halo Koperasi Desa Merah Putih, saya ingin memesan produk berikut:\n\n';
+            const selectedAdmin = adminList.find(admin => admin.phone === selectedAdminPhone);
+            let message = `Halo ${selectedAdmin.name}, saya ingin memesan produk berikut:\n\n`;
             let total = 0;
 
             cart.forEach(item => {
@@ -1635,7 +1903,7 @@
             message += `\nTotal Belanja: ${formatRupiah(total)}`;
             message += `\n\nNama: [Isi nama Anda]\nAlamat: [Isi alamat Anda]\nCatatan: [Isi catatan tambahan jika ada]`;
 
-            const whatsappUrl = `https://wa.me/628129683690?text=${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://wa.me/${selectedAdminPhone}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
 
@@ -1652,5 +1920,3 @@
             }
         }
     </script>
-</body>
-</html>
