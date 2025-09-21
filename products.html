@@ -4,6 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koperasi Desa Merah Putih - Kalurahan Kedungsari</title>
+    
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JE5G9Y7YPR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JE5G9Y7YPR');
+
+        // Enhanced tracking functions for products page
+        function trackProductView(productName, category, price) {
+            gtag('event', 'view_item', {
+                currency: 'IDR',
+                value: price,
+                items: [{
+                    item_id: productName.toLowerCase().replace(/\s+/g, '-'),
+                    item_name: productName,
+                    item_category: category,
+                    price: price,
+                    quantity: 1
+                }]
+            });
+        }
+
+        function trackAddToCart(productName, category, price, quantity) {
+            gtag('event', 'add_to_cart', {
+                currency: 'IDR',
+                value: price * quantity,
+                items: [{
+                    item_id: productName.toLowerCase().replace(/\s+/g, '-'),
+                    item_name: productName,
+                    item_category: category,
+                    price: price,
+                    quantity: quantity
+                }]
+            });
+        }
+
+        function trackCategoryFilter(category) {
+            gtag('event', 'filter_products', {
+                event_category: 'Product Filter',
+                event_label: category,
+                value: 1
+            });
+        }
+
+        function trackCheckout(cartTotal, itemCount) {
+            gtag('event', 'begin_checkout', {
+                currency: 'IDR',
+                value: cartTotal,
+                event_category: 'E-commerce',
+                event_label: 'WhatsApp Checkout',
+                items_count: itemCount
+            });
+        }
+
+        function trackVideoClick(productName, videoUrl) {
+            gtag('event', 'video_click', {
+                event_category: 'Product Video',
+                event_label: productName,
+                video_url: videoUrl,
+                value: 1
+            });
+        }
+
+        function trackWhatsAppContact(adminName, adminPhone) {
+            gtag('event', 'contact_admin', {
+                event_category: 'WhatsApp Contact',
+                event_label: adminName,
+                admin_phone: adminPhone,
+                value: 1
+            });
+        }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -344,7 +419,7 @@
         }
 
         .description-list li::before {
-            content: "✓";
+            content: "✅";
             position: absolute;
             left: 0;
             color: #28a745;
@@ -963,7 +1038,7 @@
             <h2 class="section-title">Mengapa Memilih Kami?</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🪜</div>
+                    <div class="feature-icon">🏪</div>
                     <h3>Produk Lokal Berkualitas</h3>
                     <p>Kami menyediakan produk-produk unggulan dari masyarakat lokal dengan standar kualitas terbaik</p>
                 </div>
@@ -1109,22 +1184,456 @@
                 videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
-			{
+            {
+                id: 'lainlain-4',
+                category: 'lainlain',
+                title: 'Buku Tulis',
+                description: [
+                    'Buku tulis untuk kebutuhan sekolah dan kantor'
+                ],
+                price: 6000,
+                unit: 'pcs',
+                image: 'images/lainlain/buku-tulis.jpg',
+                fallbackEmoji: '📓',
+                stock: 'out',
+                stockCount: 0,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false
+            },
+
+            // Pertanian
+            {
+                id: 'pertanian-1',
+                category: 'pertanian',
+                title: 'Benih Padi Inpari 32',
+                description: [
+                    'Benih Padi kualitas terbaik'
+                ],
+                price: 80000,
+                unit: '5Kg',
+                image: 'images/pertanian/benih-padi-inpari32.jpg',
+                fallbackEmoji: '🌱',
+                stock: 'available',
+                stockCount: 20,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false
+            },
+            {
+                id: 'pertanian-2',
+                category: 'pertanian',
+                title: 'Pupuk NPK',
+                description: [
+                    'Pupuk kimia dengan nutrisi lengkap untuk pertumbuhan tanaman optimal'
+                ],
+                price: 12000,
+                unit: 'karung',
+                image: 'images/pertanian/pupuk-npk.jpg',
+                fallbackEmoji: '🌱',
+                stock: 'out',
+                stockCount: 0,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false
+            },
+            {
+                id: 'pertanian-3',
+                category: 'pertanian',
+                title: 'Pupuk Kohe',
+                description: [
+                    'Pestisida organik ramah lingkungan untuk pengendalian hama alami'
+                ],
+                price: 25000,
+                unit: 'karung',
+                image: 'images/pertanian/pupuk-kohe.jpg',
+                fallbackEmoji: '🧴',
+                stock: 'out',
+                stockCount: 0,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false
+            },
+            {
+                id: 'pertanian-4',
+                category: 'pertanian',
+                title: 'Media Tanam',
+                description: [
+                    'Pestisida efektif untuk melindungi tanaman dari berbagai jenis hama'
+                ],
+                price: 15000,
+                unit: 'karung',
+                image: 'images/pertanian/media-tanam.jpg',
+                fallbackEmoji: '🧴',
+                stock: 'out',
+                stockCount: 0,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false
+            }  
+        ];
+
+        // State management menggunakan memori JavaScript
+        let cart = [];
+        let selectedAdminPhone = adminList[0].phone;
+        
+        const cartCountDesktop = document.getElementById('cartCountDesktop');
+        const cartCountMobile = document.getElementById('cartCountMobile');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartTotalAmount = document.getElementById('cartTotalAmount');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        const cartModal = document.getElementById('cartModal');
+        const notification = document.getElementById('notification');
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountDesktop.innerText = totalItems;
+            cartCountMobile.innerText = totalItems;
+        }
+
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR', 
+                minimumFractionDigits: 0 
+            }).format(number);
+        }
+
+        function showNotification(message, isError = false) {
+            const notificationText = document.getElementById('notificationText');
+            notificationText.innerText = message;
+            notification.className = `notification ${isError ? 'error' : ''} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function getBadges(product) {
+            let badges = '';
+            
+            if (product.stockCount === 0 || product.stock === 'out') {
+                badges += '<div class="badge stock-badge stock-out">Habis</div>';
+            } else if (product.stockCount <= 10 || product.stock === 'low') {
+                badges += '<div class="badge stock-badge stock-low">Stok Terbatas</div>';
+            } else {
+                badges += '<div class="badge stock-badge stock-available">Tersedia</div>';
+            }
+            
+            if (product.isPromo) {
+                badges += '<div class="badge promo-badge">PROMO</div>';
+            }
+            
+            if (product.isNew) {
+                badges += '<div class="badge new-badge">BARU</div>';
+            }
+            
+            return badges;
+        }
+
+        function changeQuantity(productId, change) {
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            let currentQuantity = parseInt(quantityInput.value);
+            const product = productGallery.find(p => p.id === productId);
+            
+            currentQuantity += change;
+            if (currentQuantity < 1) {
+                currentQuantity = 1;
+            }
+            if (currentQuantity > product.stockCount) {
+                currentQuantity = product.stockCount;
+                showNotification(`Stok ${product.title} hanya tersisa ${product.stockCount}`, true);
+            }
+            quantityInput.value = currentQuantity;
+        }
+
+        function addToCart(productId) {
+            const product = productGallery.find(p => p.id === productId);
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            const quantity = parseInt(quantityInput.value);
+            
+            if (product.stockCount === 0) {
+                showNotification('Produk ini sedang habis', true);
+                return;
+            }
+            
+            if (quantity > product.stockCount) {
+                showNotification(`Stok ${product.title} hanya tersisa ${product.stockCount}`, true);
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                const newQuantity = existingItem.quantity + quantity;
+                if (newQuantity > product.stockCount) {
+                    showNotification(`Total tidak boleh melebihi stok yang tersedia (${product.stockCount})`, true);
+                    return;
+                }
+                existingItem.quantity = newQuantity;
+            } else {
+                cart.push({
+                    id: productId,
+                    title: product.title,
+                    price: product.price,
+                    unit: product.unit,
+                    quantity: quantity,
+                    image: product.image,
+                    fallbackEmoji: product.fallbackEmoji
+                });
+            }
+            
+            // Track add to cart event
+            trackAddToCart(product.title, product.category, product.price, quantity);
+            
+            updateCartCount();
+            showNotification(`${quantity} ${product.unit} ${product.title} ditambahkan ke keranjang!`);
+            quantityInput.value = 1;
+        }
+
+        function renderAdminSelection() {
+            const adminGrid = document.getElementById('adminGrid');
+            adminGrid.innerHTML = '';
+            adminList.forEach(admin => {
+                const adminCard = document.createElement('div');
+                adminCard.className = `admin-card ${selectedAdminPhone === admin.phone ? 'selected' : ''}`;
+                adminCard.onclick = () => selectAdmin(admin.phone);
+                adminCard.innerHTML = `
+                    <div class="admin-name">${admin.name}</div>
+                    <div class="admin-phone">${admin.role}</div>
+                    <div class="admin-status">${admin.status}</div>
+                `;
+                adminGrid.appendChild(adminCard);
+            });
+        }
+
+        function selectAdmin(phone) {
+            selectedAdminPhone = phone;
+            renderAdminSelection();
+        }
+
+        function renderGallery(filter = 'all') {
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = '';
+            
+            const filteredProducts = filter === 'all' 
+                ? productGallery 
+                : productGallery.filter(product => product.category === filter);
+            
+            filteredProducts.forEach(product => {
+                // Track product view
+                trackProductView(product.title, product.category, product.price);
+                
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.dataset.category = product.category;
+                
+                const isOutOfStock = product.stockCount === 0;
+                
+                const descriptionHtml = `
+                    <ul class="description-list">
+                        ${product.description.map(desc => `<li>${desc}</li>`).join('')}
+                    </ul>
+                `;
+                
+                const videoHtml = product.hasVideo && product.videoUrl ? `
+                    <div class="item-video">
+                        <a href="${product.videoUrl}" target="_blank" class="video-link" onclick="trackVideoClick('${product.title}', '${product.videoUrl}')">
+                            ▶️ Tonton Video Produk
+                        </a>
+                    </div>
+                ` : '';
+                
+                galleryItem.innerHTML = `
+                    <div class="gallery-item-image">
+                        <img src="${product.image}" alt="${product.title}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none; font-size: 4rem; color: #adb5bd; display: flex; align-items: center; justify-content: center; height: 100%;">${product.fallbackEmoji}</div>
+                        <div class="badges-container">
+                            ${getBadges(product)}
+                        </div>
+                    </div>
+                    <div class="gallery-item-content">
+                        <div class="item-category">${product.category}</div>
+                        <h3 class="item-title">${product.title}</h3>
+                        <div class="item-description">
+                            ${descriptionHtml}
+                        </div>
+                        ${videoHtml}
+                        <div class="item-price">${formatRupiah(product.price)}/${product.unit}</div>
+                        <div class="quantity-selector">
+                            <span class="quantity-label">Jumlah:</span>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity('${product.id}', -1)" ${isOutOfStock ? 'disabled' : ''}>-</button>
+                                <input type="number" id="quantity-${product.id}" value="1" min="1" max="${product.stockCount}" class="quantity-input" ${isOutOfStock ? 'disabled' : ''}>
+                                <button class="quantity-btn" onclick="changeQuantity('${product.id}', 1)" ${isOutOfStock ? 'disabled' : ''}>+</button>
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.id}')" ${isOutOfStock ? 'disabled' : ''}>
+                            ${isOutOfStock ? '❌ Habis' : '🛒 Tambah ke Keranjang'}
+                        </button>
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+        }
+
+        function filterGallery(category) {
+            // Track category filter
+            trackCategoryFilter(category);
+            
+            renderGallery(category);
+            
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.category-btn[onclick="filterGallery('${category}')"]`).classList.add('active');
+        }
+
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                document.querySelector('.cart-total').classList.add('hidden');
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                document.querySelector('.cart-total').classList.remove('hidden');
+                
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item');
+                    itemDiv.innerHTML = `
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-details">${formatRupiah(item.price)}/${item.unit}</div>
+                            <div class="cart-item-quantity">
+                                <button class="cart-quantity-btn" onclick="updateCartItemQuantity(${index}, -1)">-</button>
+                                <span>${item.quantity} ${item.unit}</span>
+                                <button class="cart-quantity-btn" onclick="updateCartItemQuantity(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <span class="cart-item-price">${formatRupiah(itemTotal)}</span>
+                        <button class="cart-item-remove" onclick="removeCartItem(${index})">Hapus</button>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+                });
+            }
+            cartTotalAmount.innerText = formatRupiah(total);
+        }
+
+        function updateCartItemQuantity(index, change) {
+            const item = cart[index];
+            const product = productGallery.find(p => p.id === item.id);
+            
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                removeCartItem(index);
+            } else if (item.quantity > product.stockCount) {
+                item.quantity = product.stockCount;
+                showNotification(`Stok ${product.title} hanya tersisa ${product.stockCount}`, true);
+                renderCartItems();
+                updateCartCount();
+            } else {
+                renderCartItems();
+                updateCartCount();
+            }
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            renderCartItems();
+            updateCartCount();
+        }
+
+        function openCart() {
+            renderCartItems();
+            renderAdminSelection();
+            cartModal.style.display = 'block';
+        }
+
+        function closeCart() {
+            cartModal.style.display = 'none';
+        }
+
+        function clearCart() {
+            cart = [];
+            renderCartItems();
+            updateCartCount();
+            showNotification('Keranjang belanja berhasil dikosongkan.');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Keranjang Anda kosong. Tambahkan produk untuk checkout.', true);
+                return;
+            }
+
+            const selectedAdmin = adminList.find(admin => admin.phone === selectedAdminPhone);
+            let message = `Halo ${selectedAdmin.name}, saya ingin memesan produk berikut:\n\n`;
+            let total = 0;
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `- ${item.quantity} ${item.unit} ${item.title} - ${formatRupiah(itemTotal)}\n`;
+            });
+
+            message += `\nTotal Belanja: ${formatRupiah(total)}`;
+            message += `\n\nNama: [Isi nama Anda]\nAlamat: [Isi alamat Anda]\nCatatan: [Isi catatan tambahan jika ada]`;
+
+            // Track checkout event
+            trackCheckout(total, itemCount);
+            trackWhatsAppContact(selectedAdmin.name, selectedAdmin.phone);
+
+            const whatsappUrl = `https://wa.me/${selectedAdminPhone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            renderGallery();
+            
+            // Track page load
+            gtag('event', 'page_view', {
+                page_title: 'Products Page - Koperasi Desa Merah Putih',
+                page_location: window.location.href
+            });
+        });
+
+        window.onclick = function(event) {
+            if (event.target === cartModal) {
+                closeCart();
+            }
+        }
+    </script>
+
+</body>
+</html>
+            {
                 id: 'beras-2',
                 category: 'beras',
                 title: 'Beras Lokal Inpari 32',
                 description: [
-					'Beras Lokal Kualitas terbaik'
-				],
+                    'Beras Lokal Kualitas terbaik'
+                ],
                 price: 13000,
                 unit: 'kg',
                 image: 'images/beras/beras-impari32.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'available',
                 stockCount: 30,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/shorts/rglFAoFa5ds',
+                videoUrl: 'https://www.youtube.com/shorts/rglFAoFa5ds',
                 hasVideo: true
             },
             {
@@ -1132,37 +1641,37 @@
                 category: 'beras',
                 title: 'Beras Ketan Putih',
                 description: [
-					'Beras ketan putih untuk berbagai olahan tradisional dan modern'
-				],
+                    'Beras ketan putih untuk berbagai olahan tradisional dan modern'
+                ],
                 price: 13000,
                 unit: 'kg',
                 image: 'images/beras/beras-ketan-putih.jpg',
                 fallbackEmoji: '🌾',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
-			
-			// Gula
+            
+            // Gula
             {
                 id: 'gula-1',
                 category: 'gula',
                 title: 'Gula Pasir Putih',
                 description: [
-					'Gula pasir dari tebu pilihan'
-				],
+                    'Gula pasir dari tebu pilihan'
+                ],
                 price: 17500,
                 unit: 'kg',
                 image: 'images/gula/gula-pasir-putih.jpg',
                 fallbackEmoji: '🍯',
                 stock: 'available',
                 stockCount: 50,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },       
 
@@ -1172,17 +1681,17 @@
                 category: 'sayuran',
                 title: 'Kangkung Organik',
                 description: [
-					'Kangkung segar tanpa pestisida langsung dari kebun organik lokal'
-				],
+                    'Kangkung segar tanpa pestisida langsung dari kebun organik lokal'
+                ],
                 price: 3000,
                 unit: 'ikat',
                 image: 'images/sayuran/kangkung-organik.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1190,17 +1699,17 @@
                 category: 'sayuran',
                 title: 'Bayam Merah',
                 description: [
-					'Bayam merah kaya zat besi dan vitamin untuk keluarga sehat'
-				],
+                    'Bayam merah kaya zat besi dan vitamin untuk keluarga sehat'
+                ],
                 price: 3500,
                 unit: 'ikat',
                 image: 'images/sayuran/bayam-merah.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1208,17 +1717,17 @@
                 category: 'sayuran',
                 title: 'Sawi Hijau',
                 description: [
-					'Sawi hijau segar dengan daun lebar dan renyah, cocok untuk berbagai masakan'
-				],
+                    'Sawi hijau segar dengan daun lebar dan renyah, cocok untuk berbagai masakan'
+                ],
                 price: 4000,
                 unit: 'ikat',
                 image: 'images/sayuran/sawi-hijau.jpg',
                 fallbackEmoji: '🥬',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1226,17 +1735,17 @@
                 category: 'sayuran',
                 title: 'Tomat Cherry',
                 description: [
-					'Tomat cherry manis dan segar untuk salad atau camilan sehat'
-				],
+                    'Tomat cherry manis dan segar untuk salad atau camilan sehat'
+                ],
                 price: 8000,
                 unit: '250gr',
                 image: 'images/sayuran/tomat-cherry.jpg',
                 fallbackEmoji: '🍅',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
 
@@ -1246,17 +1755,17 @@
                 category: 'ikan',
                 title: 'Ikan Lele Segar',
                 description: [
-					'Ikan lele segar dari kolam lokal, kaya protein dan omega-3'
-				],
+                    'Ikan lele segar dari kolam lokal, kaya protein dan omega-3'
+                ],
                 price: 24000,
                 unit: 'kg',
                 image: 'images/ikan/ikan-lele.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'available',
                 stockCount: 20,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=BBxC_tqT1z0',
+                videoUrl: 'https://www.youtube.com/watch?v=BBxC_tqT1z0',
                 hasVideo: true
             },
             {
@@ -1264,17 +1773,17 @@
                 category: 'ikan',
                 title: 'Ikan Nila Segar',
                 description: [
-					'Ikan nila segar dengan daging putih dan rasa yang lezat'
-				],
+                    'Ikan nila segar dengan daging putih dan rasa yang lezat'
+                ],
                 price: 30000,
                 unit: 'kg',
                 image: 'images/ikan/ikan-nila.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'available',
                 stockCount: 18,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1282,17 +1791,17 @@
                 category: 'ikan',
                 title: 'Ikan Gurame',
                 description: [
-					'Ikan gurame premium dengan daging tebal dan gurih'
-				],
+                    'Ikan gurame premium dengan daging tebal dan gurih'
+                ],
                 price: 35000,
                 unit: 'kg',
                 image: 'images/ikan/ikan-gurame.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1300,17 +1809,17 @@
                 category: 'ikan',
                 title: 'Ikan Bandeng',
                 description: [
-					'Ikan bandeng segar khas lokal dengan cita rasa yang lezat'
-				],
+                    'Ikan bandeng segar khas lokal dengan cita rasa yang lezat'
+                ],
                 price: 22000,
                 unit: 'kg',
                 image: 'images/ikan/ikan-bandeng.jpg',
                 fallbackEmoji: '🐟',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
 
@@ -1320,17 +1829,17 @@
                 category: 'daging',
                 title: 'Daging Sapi Segar',
                 description: [
-					'Daging sapi lokal berkualitas premium untuk kebutuhan keluarga'
-				],
+                    'Daging sapi lokal berkualitas premium untuk kebutuhan keluarga'
+                ],
                 price: 120000,
                 unit: 'kg',
                 image: 'images/daging/daging-sapi.jpg',
                 fallbackEmoji: '🥩',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1338,17 +1847,17 @@
                 category: 'daging',
                 title: 'Daging Kambing',
                 description: [
-					'Daging kambing segar untuk masakan tradisional dan modern'
-				],
+                    'Daging kambing segar untuk masakan tradisional dan modern'
+                ],
                 price: 110000,
                 unit: 'kg',
                 image: 'images/daging/daging-kambing.jpg',
                 fallbackEmoji: '🥩',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1356,17 +1865,17 @@
                 category: 'daging',
                 title: 'Daging Ayam Kampung',
                 description: [
-					'Ayam kampung asli dengan daging yang gurih dan sehat'
-				],
+                    'Ayam kampung asli dengan daging yang gurih dan sehat'
+                ],
                 price: 85000,
                 unit: 'kg',
                 image: 'images/daging/ayam-kampung.jpg',
-                fallbackEmoji: '🐔',
+                fallbackEmoji: '🐓',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1374,17 +1883,17 @@
                 category: 'daging',
                 title: 'Daging Bebek',
                 description: [
-					'Daging bebek segar untuk berbagai olahan kuliner nusantara'
-				],
+                    'Daging bebek segar untuk berbagai olahan kuliner nusantara'
+                ],
                 price: 75000,
                 unit: 'kg',
                 image: 'images/daging/daging-bebek.jpg',
                 fallbackEmoji: '🦆',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
 
@@ -1394,17 +1903,17 @@
                 category: 'telur',
                 title: 'Telur Ayam Kampung',
                 description: [
-					'Telur ayam kampung asli dengan kuning telur orange dan bergizi tinggi'
-				],
+                    'Telur ayam kampung asli dengan kuning telur orange dan bergizi tinggi'
+                ],
                 price: 2500,
                 unit: 'butir',
                 image: 'images/telur/telur-ayam-kampung.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1412,17 +1921,17 @@
                 category: 'telur',
                 title: 'Telur Ayam Ras',
                 description: [
-					'Telur ayam ras segar untuk kebutuhan sehari-hari keluarga'
-				],
+                    'Telur ayam ras segar untuk kebutuhan sehari-hari keluarga'
+                ],
                 price: 28000,
                 unit: 'kg',
                 image: 'images/telur/telur-ayam-ras.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'available',
                 stockCount: 150,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1430,17 +1939,17 @@
                 category: 'telur',
                 title: 'Telur Bebek',
                 description: [
-					'Telur bebek segar cocok untuk membuat kue dan masakan tradisional'
-				],
+                    'Telur bebek segar cocok untuk membuat kue dan masakan tradisional'
+                ],
                 price: 2800,
                 unit: 'butir',
                 image: 'images/telur/telur-bebek.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'available',
                 stockCount: 60,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=fnN2i7n6Mig',
+                videoUrl: 'https://www.youtube.com/watch?v=fnN2i7n6Mig',
                 hasVideo: true
             },
             {
@@ -1448,17 +1957,17 @@
                 category: 'telur',
                 title: 'Telur Puyuh',
                 description: [
-					'Telur puyuh kecil yang bergizi tinggi dan cocok untuk camilan'
-				],
+                    'Telur puyuh kecil yang bergizi tinggi dan cocok untuk camilan'
+                ],
                 price: 1000,
                 unit: 'butir',
                 image: 'images/telur/telur-puyuh.jpg',
                 fallbackEmoji: '🥚',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
 
@@ -1468,17 +1977,17 @@
                 category: 'olahan',
                 title: 'Tempe Kedelai',
                 description: [
-					'Tempe kedelai organik hasil fermentasi tradisional yang sehat'
-				],
+                    'Tempe kedelai organik hasil fermentasi tradisional yang sehat'
+                ],
                 price: 3000,
                 unit: 'papan',
                 image: 'images/olahan/tempe-organik.jpg',
                 fallbackEmoji: '🍜',
                 stock: 'available',
                 stockCount: 30,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1486,17 +1995,17 @@
                 category: 'olahan',
                 title: 'Tahu Putih',
                 description: [
-					'Tahu putih segar dibuat dengan kedelai berkualitas tinggi'
-				],
+                    'Tahu putih segar dibuat dengan kedelai berkualitas tinggi'
+                ],
                 price: 5000,
                 unit: 'papan',
                 image: 'images/olahan/tahu-putih.jpg',
                 fallbackEmoji: '🍜',
                 stock: 'available',
                 stockCount: 40,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1504,17 +2013,17 @@
                 category: 'olahan',
                 title: 'Kerupuk Ikan',
                 description: [
-					'Kerupuk ikan tradisional dengan rasa gurih dan renyah'
-				],
+                    'Kerupuk ikan tradisional dengan rasa gurih dan renyah'
+                ],
                 price: 15000,
                 unit: 'pack',
                 image: 'images/olahan/kerupuk-ikan.jpg',
-                fallbackEmoji: '🍘',
+                fallbackEmoji: '😋',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1522,17 +2031,17 @@
                 category: 'olahan',
                 title: 'Sambal Pecel',
                 description: [
-					'Sambal pecel khas dengan bumbu rempah pilihan yang autentik'
-				],
+                    'Sambal pecel khas dengan bumbu rempah pilihan yang autentik'
+                ],
                 price: 30000,
                 unit: 'pack',
                 image: 'images/olahan/sambal-pecel.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1540,17 +2049,17 @@
                 category: 'olahan',
                 title: 'Cireng Ayam Pedas',
                 description: [
-					'Cireng dengan isi daging ayam suwir pedas. Bisa digoreng atau mentah'
-				],
+                    'Cireng dengan isi daging ayam suwir pedas. Bisa digoreng atau mentah'
+                ],
                 price: 1000,
                 unit: 'pcs',
                 image: 'images/olahan/cireng-ayam-pedas.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1558,35 +2067,35 @@
                 category: 'olahan',
                 title: 'Peyek Kacang Tanah',
                 description: [
-					'Peyek renyah'
-				],
+                    'Peyek renyah'
+                ],
                 price: 10000,
                 unit: 'bungkus',
                 image: 'images/olahan/peyek-kacang-tanah.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'available',
                 stockCount: 20,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
-                id: 'olahan-6',
+                id: 'olahan-7',
                 category: 'olahan',
                 title: 'Peyek Kacang Tholo',
                 description: [
-					'Peyek renyah'
-				],
+                    'Peyek renyah'
+                ],
                 price: 10000,
                 unit: 'bungkus',
                 image: 'images/olahan/peyek-kacang-tholo.jpg',
                 fallbackEmoji: '🌶️',
                 stock: 'available',
                 stockCount: 20,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             
@@ -1596,17 +2105,17 @@
                 category: 'minuman',
                 title: 'Jamu Kunyit Asam',
                 description: [
-					'Jamu tradisional kunyit asam untuk kesehatan dan stamina'
-				],
+                    'Jamu tradisional kunyit asam untuk kesehatan dan stamina'
+                ],
                 price: 8000,
                 unit: 'botol',
                 image: 'images/minuman/jamu-kunyit-asam.jpg',
                 fallbackEmoji: '🥤',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1614,17 +2123,17 @@
                 category: 'minuman',
                 title: 'Es Kelapa Muda',
                 description: [
-					'Kelapa muda segar langsung dari kebun untuk minuman yang menyegarkan'
-				],
+                    'Kelapa muda segar langsung dari kebun untuk minuman yang menyegarkan'
+                ],
                 price: 12000,
                 unit: 'buah',
                 image: 'images/minuman/kelapa-muda.jpg',
                 fallbackEmoji: '🥥',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1632,17 +2141,17 @@
                 category: 'minuman',
                 title: 'Wedang Jahe',
                 description: [
-					'Wedang jahe hangat dengan rempah-rempah alami untuk menghangatkan tubuh'
-				],
+                    'Wedang jahe hangat dengan rempah-rempah alami untuk menghangatkan tubuh'
+                ],
                 price: 5000,
                 unit: 'gelas',
                 image: 'images/minuman/wedang-jahe.jpg',
                 fallbackEmoji: '☕',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1650,17 +2159,17 @@
                 category: 'minuman',
                 title: 'Teh Daun Mint',
                 description: [
-					'Teh daun mint segar untuk relaksasi dan kesehatan'
-				],
+                    'Teh daun mint segar untuk relaksasi dan kesehatan'
+                ],
                 price: 6000,
                 unit: 'gelas',
                 image: 'images/minuman/teh-mint.jpg',
                 fallbackEmoji: '🍵',
                 stock: 'out',
                 stockCount: 0,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
 
@@ -1670,17 +2179,17 @@
                 category: 'lainlain',
                 title: 'Gas Melon',
                 description: [
-					'Tabung gas melon untuk kebutuhan masak sehari-hari'
-				],
+                    'Tabung gas melon untuk kebutuhan masak sehari-hari'
+                ],
                 price: 21000,
                 unit: 'tabung',
                 image: 'images/lainlain/gas-melon.jpg',
                 fallbackEmoji: '⛽',
                 stock: 'available',
                 stockCount: 15,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
@@ -1688,17 +2197,17 @@
                 category: 'lainlain',
                 title: 'Materai',
                 description: [
-					'Materai resmi untuk keperluan dokumen dan surat-surat penting'
-				],
+                    'Materai resmi untuk keperluan dokumen dan surat-surat penting'
+                ],
                 price: 12000,
                 unit: 'pcs',
                 image: 'images/lainlain/materai.jpg',
                 fallbackEmoji: '📋',
                 stock: 'available',
                 stockCount: 100,
-				isPromo: false,
+                isPromo: false,
                 isNew: true,
-				videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 hasVideo: false
             },
             {
