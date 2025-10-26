@@ -1162,6 +1162,7 @@
 
             <div class="category-filters">
                 <button class="category-btn active" onclick="filterGallery('all')">Semua Produk</button>
+				<button class="category-btn" onclick="filterGallery('madu')">Madu</button>
                 <button class="category-btn" onclick="filterGallery('beras')">Beras</button>
                 <button class="category-btn" onclick="filterGallery('telur')">Telur</button>
                 <button class="category-btn" onclick="filterGallery('ikan')">Ikan</button>
@@ -1170,7 +1171,6 @@
                 <button class="category-btn" onclick="filterGallery('sayuran')">Sayuran</button>
                 <button class="category-btn" onclick="filterGallery('daging')">Daging</button>
                 <button class="category-btn" onclick="filterGallery('olahan')">Olahan</button>
-                <button class="category-btn" onclick="filterGallery('minuman')">Minuman</button>
                 <button class="category-btn" onclick="filterGallery('lainlain')">Lain-lain</button>
                 <button class="category-btn" onclick="filterGallery('pertanian')">Pertanian</button>
             </div>
@@ -1321,7 +1321,53 @@
 
         // Data produk dengan deskripsi terstruktur dan link video
         const productGallery = [
-            // Beras
+            // Madu
+            {
+                id: 'madu-1',
+                category: 'madu',
+                title: 'Envella Madu Kita',
+                description: [
+                    'Madu Multiflora',
+                    'Madu Asli, Murni & Aalami'
+                ],
+                price: 55000,
+                unit: 'botol',
+                image: 'images/madu/madu-envella-1.jpg',
+                fallbackEmoji: '🍯',
+                stock: 'available',
+                stockCount: 50,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false,
+				photos: [
+                    { url: 'images/madu/madu-envella-1.jpg', caption: 'Madu Multiflora' }
+                ]
+            },
+            {
+               id: 'madu-2',
+                category: 'madu',
+                title: 'Envella Madu Kita',
+                description: [
+                    'Madu Multiflora',
+                    'Madu Asli, Murni & Aalami'
+                ],
+                price: 55000,
+                unit: 'botol',
+                image: 'images/madu/madu-envella-2.jpg',
+                fallbackEmoji: '🍯',
+                stock: 'available',
+                stockCount: 50,
+                isPromo: false,
+                isNew: true,
+                videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                hasVideo: false,
+				photos: [
+                    { url: 'images/madu/madu-envella-2.jpg', caption: 'Madu Multiflora' }
+                ]
+            }, 
+			
+			// Beras
             {
                 id: 'beras-1',
                 category: 'beras',
